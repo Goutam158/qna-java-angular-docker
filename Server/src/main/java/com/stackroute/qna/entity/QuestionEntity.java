@@ -25,46 +25,44 @@ public class QuestionEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_ON")
 	private Date createdOn;
-	@OneToMany
-	@JoinColumn()
+	@OneToMany(mappedBy="question")
 	private Set<CommentEntity> comments;
-	
+	@JoinColumn(name="id", nullable=false)
+	private TopicEntity topic;
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	public Date getCreatedOn() {
 		return createdOn;
 	}
-
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-
 	public Set<CommentEntity> getComments() {
 		return comments;
 	}
-
 	public void setComments(Set<CommentEntity> comments) {
 		this.comments = comments;
 	}
-
+	public TopicEntity getTopic() {
+		return topic;
+	}
+	public void setTopic(TopicEntity topic) {
+		this.topic = topic;
+	}
 	@Override
 	public String toString() {
 		return "QuestionEntity [id=" + id + ", description=" + description + ", createdOn=" + createdOn + ", comments="
-				+ comments + "]";
+				+ comments + ", topic=" + topic + "]";
 	}
 	
 }

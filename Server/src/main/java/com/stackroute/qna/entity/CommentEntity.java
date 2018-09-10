@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,6 +23,10 @@ public class CommentEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_ON")
 	private Date createdOn;
+	
+	@JoinColumn(name="id", nullable=false)
+	private QuestionEntity question;
+	
 	public int getId() {
 		return id;
 	}
@@ -40,9 +45,16 @@ public class CommentEntity {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+	public QuestionEntity getQuestion() {
+		return question;
+	}
+	public void setQuestion(QuestionEntity question) {
+		this.question = question;
+	}
 	@Override
 	public String toString() {
-		return "CommentEntity [id=" + id + ", description=" + description + ", createdOn=" + createdOn + "]";
+		return "CommentEntity [id=" + id + ", description=" + description + ", createdOn=" + createdOn + ", question="
+				+ question + "]";
 	}
 
 }

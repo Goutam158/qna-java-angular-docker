@@ -27,8 +27,7 @@ public class TopicEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_ON")
 	private Date createdOn;
-	@OneToMany
-	@JoinColumn()
+	@OneToMany(mappedBy="topic")
 	private Set<QuestionEntity> questions;
 	public int getId() {
 		return id;
