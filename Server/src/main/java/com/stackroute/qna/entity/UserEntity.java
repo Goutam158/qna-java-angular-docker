@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Table(name="QNA_USER", catalog="QNADB")
+@Table(name="QNA_USERS", catalog="QNADB")
 @Entity()
 public class UserEntity implements Serializable{
 

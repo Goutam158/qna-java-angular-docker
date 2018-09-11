@@ -10,6 +10,7 @@ public class TopicTO {
 	private String description;
 	private Date createdOn;
 	private Set<QuestionTO> questions;
+	private UserTO createdBy;
 	public int getId() {
 		return id;
 	}
@@ -40,10 +41,16 @@ public class TopicTO {
 	public void setQuestions(Set<QuestionTO> questions) {
 		this.questions = questions;
 	}
+	public UserTO getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(UserTO createdBy) {
+		this.createdBy = createdBy;
+	}
 	@Override
 	public String toString() {
 		return "TopicTO [id=" + id + ", name=" + name + ", description=" + description + ", createdOn=" + createdOn
-				+ ", questions=" + questions + "]";
+				+ ", questions=" + questions + ", createdBy=" + createdBy + "]";
 	}
 	
 	

@@ -1,6 +1,9 @@
 package com.stackroute.qna.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,18 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.stackroute.qna.TO.CommentTO;
 import com.stackroute.qna.exception.CommentNotFoundException;
 import com.stackroute.qna.exception.QuestionNotFoundException;
+import com.stackroute.qna.exception.UserNotFoundException;
 import com.stackroute.qna.service.CommentService;
 
 @RestController
 @RequestMapping("/qna/api/v1/comment")
+@CrossOrigin(origins="http://localhost:4200")
 public class CommentEndpoint {
 
 	@Autowired
 	private CommentService service;
 	
-	@PostMapping(value="/", consumes="application/json")
-	public boolean addComment(@RequestBody CommentTO to) throws CommentNotFoundException, QuestionNotFoundException {
-		return service.addComment(to);
+	@PostMapping(value="", consumes="application/json")
+	public boolean addComment(@RequestBody CommentTO to, HttpServletRequest request) throws CommentNotFoundException, QuestionNotFoundException, UserNotFoundException {
+		String email = (String)request.getAttribute("email");
+		return service.addComment(to,email);
 	}
 	
 	@DeleteMapping(value="/{id}")

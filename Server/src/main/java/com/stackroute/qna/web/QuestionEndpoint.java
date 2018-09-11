@@ -1,6 +1,9 @@
 package com.stackroute.qna.web;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,18 +16,21 @@ import com.stackroute.qna.TO.QuestionTO;
 import com.stackroute.qna.TO.TopicTO;
 import com.stackroute.qna.exception.QuestionNotFoundException;
 import com.stackroute.qna.exception.TopicNotFoundException;
+import com.stackroute.qna.exception.UserNotFoundException;
 import com.stackroute.qna.service.QuestionService;
 
 @RestController
 @RequestMapping("/qna/api/v1/question")
+@CrossOrigin(origins="http://localhost:4200")
 public class QuestionEndpoint {
 
 	@Autowired
 	private QuestionService service;
 	
-	@PostMapping(value="/", consumes="application/json")
-	public boolean addQuestion(@RequestBody QuestionTO to) throws QuestionNotFoundException, TopicNotFoundException {
-		return service.addQuestion(to);
+	@PostMapping(value="", consumes="application/json")
+	public boolean addQuestion(@RequestBody QuestionTO to, HttpServletRequest request) throws QuestionNotFoundException, TopicNotFoundException, UserNotFoundException {
+		String email = (String)request.getAttribute("email");
+		return service.addQuestion(to, email);
 	}
 	
 	@DeleteMapping(value="/{id}")

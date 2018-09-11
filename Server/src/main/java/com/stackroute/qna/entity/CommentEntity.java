@@ -28,6 +28,10 @@ public class CommentEntity {
 	@JoinColumn(name="question_id",referencedColumnName="id" ,nullable=false)
 	private QuestionEntity question;
 	
+	@ManyToOne()
+	@JoinColumn(name="user_id",referencedColumnName="user_id" ,nullable=false)
+	private UserEntity createdBy;
+	
 	public int getId() {
 		return id;
 	}
@@ -52,10 +56,16 @@ public class CommentEntity {
 	public void setQuestion(QuestionEntity question) {
 		this.question = question;
 	}
+	public UserEntity getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(UserEntity createdBy) {
+		this.createdBy = createdBy;
+	}
 	@Override
 	public String toString() {
 		return "CommentEntity [id=" + id + ", description=" + description + ", createdOn=" + createdOn + ", question="
-				+ question + "]";
+				+ question + ", createdBy=" + createdBy + "]";
 	}
 
 }

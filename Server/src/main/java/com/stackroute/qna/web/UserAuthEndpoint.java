@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stackroute.qna.TO.UserTO;
@@ -15,16 +16,16 @@ import com.stackroute.qna.exception.UserNotFoundException;
 import com.stackroute.qna.service.UserService;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/qna/auth-api/v1/")
+@CrossOrigin(origins="http://localhost:4200")
 public class UserAuthEndpoint {
 
 	@Autowired
 	private UserService userService;
 
 	@PostMapping(value="/login", produces="text/html")
-	public ResponseEntity<String> login(String userName, String password) {
-		String token = userService.login(userName, password);
+	public ResponseEntity<String> login(@RequestParam("email") String email, @RequestParam("password") String password) {
+		String token = userService.login(email, password);
 		if(null ==  token) {
 			return new ResponseEntity<String>(token, HttpStatus.UNAUTHORIZED);
 		}

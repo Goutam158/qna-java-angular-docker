@@ -4,7 +4,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.filter.GenericFilterBean;
 
 import com.stackroute.qna.web.AuthFilter;
 
@@ -15,7 +14,7 @@ public class QnAApp {
 	public FilterRegistrationBean authFilter() {
 		final FilterRegistrationBean authFilter =  new FilterRegistrationBean();
 		authFilter.setFilter(new AuthFilter());
-		authFilter.addUrlPatterns("/qna/app/v1/api/*");
+		authFilter.addUrlPatterns("/qna/api/v1/*");
 		return authFilter;
 	}
 	

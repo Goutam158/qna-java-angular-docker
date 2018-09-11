@@ -8,6 +8,7 @@ public class CommentTO {
 	private String description;
 	private Date createdOn;
 	private QuestionTO question;
+	private UserTO createdBy;
 	public int getId() {
 		return id;
 	}
@@ -32,10 +33,16 @@ public class CommentTO {
 	public void setQuestion(QuestionTO question) {
 		this.question = question;
 	}
+	public UserTO getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(UserTO createdBy) {
+		this.createdBy = createdBy;
+	}
 	@Override
 	public String toString() {
 		return "CommentTO [id=" + id + ", description=" + description + ", createdOn=" + createdOn + ", question="
-				+ question + "]";
+				+ question + ", createdBy=" + createdBy + "]";
 	}
 
 }

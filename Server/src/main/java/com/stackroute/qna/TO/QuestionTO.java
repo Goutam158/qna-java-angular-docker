@@ -12,6 +12,7 @@ public class QuestionTO {
 	private Date createdOn;
 	private Set<CommentTO> comments;
 	private TopicEntity topic;
+	private UserTO createdBy;
 	public int getId() {
 		return id;
 	}
@@ -42,10 +43,16 @@ public class QuestionTO {
 	public void setTopic(TopicEntity topic) {
 		this.topic = topic;
 	}
+	public UserTO getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(UserTO createdBy) {
+		this.createdBy = createdBy;
+	}
 	@Override
 	public String toString() {
 		return "QuestionTO [id=" + id + ", description=" + description + ", createdOn=" + createdOn + ", comments="
-				+ comments + ", topic=" + topic + "]";
+				+ comments + ", topic=" + topic + ", createdBy=" + createdBy + "]";
 	}
 	
 }

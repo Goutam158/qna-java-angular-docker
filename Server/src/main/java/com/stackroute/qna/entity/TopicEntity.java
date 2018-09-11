@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,6 +30,9 @@ public class TopicEntity {
 	private Date createdOn;
 	@OneToMany(mappedBy="topic")
 	private Set<QuestionEntity> questions;
+	@ManyToOne()
+	@JoinColumn(name="user_id",referencedColumnName="user_id" ,nullable=false)
+	private UserEntity createdBy;
 	public int getId() {
 		return id;
 	}
@@ -59,10 +63,16 @@ public class TopicEntity {
 	public void setQuestions(Set<QuestionEntity> questions) {
 		this.questions = questions;
 	}
+	public UserEntity getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(UserEntity createdBy) {
+		this.createdBy = createdBy;
+	}
 	@Override
 	public String toString() {
 		return "TopicEntity [id=" + id + ", name=" + name + ", description=" + description + ", createdOn=" + createdOn
-				+ ", questions=" + questions + "]";
+				+ ", questions=" + questions + ", createdBy=" + createdBy + "]";
 	}
 	
 

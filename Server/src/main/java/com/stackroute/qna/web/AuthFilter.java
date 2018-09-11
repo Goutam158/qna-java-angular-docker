@@ -22,7 +22,6 @@ public class AuthFilter extends GenericFilterBean {
 			throws IOException, ServletException {
 		final HttpServletRequest request = (HttpServletRequest)req;
 		final HttpServletResponse response = (HttpServletResponse) res;
-
 		if("OPTIONS".equals(request.getMethod())) {
 			response.setStatus(200);
 			chain.doFilter(req, res);
@@ -34,16 +33,16 @@ public class AuthFilter extends GenericFilterBean {
 			}
 
 			final String token = authHeader.substring(7);
-			final String userName = Jwts
+			final String email = Jwts
 					.parser()
 					.setSigningKey("my$ecr3tk3y")
 					.parseClaimsJws(token)
 					.getBody()
 					.getSubject();
-			if(StringUtils.isEmpty(userName)) {
+			if(StringUtils.isEmpty(email)) {
 				throw new ServletException("No valid user found in the auth token");
 			}
-			request.setAttribute("userName", userName);
+			request.setAttribute("email", email);
 			chain.doFilter(request, response);
 		}
 	}

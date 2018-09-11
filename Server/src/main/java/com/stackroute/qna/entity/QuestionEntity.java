@@ -31,6 +31,9 @@ public class QuestionEntity {
 	@ManyToOne()
 	@JoinColumn(name="topic_id",referencedColumnName="id", nullable=false)
 	private TopicEntity topic;
+	@ManyToOne()
+	@JoinColumn(name="user_id",referencedColumnName="user_id" ,nullable=false)
+	private UserEntity createdBy;
 	public int getId() {
 		return id;
 	}
@@ -61,10 +64,16 @@ public class QuestionEntity {
 	public void setTopic(TopicEntity topic) {
 		this.topic = topic;
 	}
+	public UserEntity getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(UserEntity createdBy) {
+		this.createdBy = createdBy;
+	}
 	@Override
 	public String toString() {
 		return "QuestionEntity [id=" + id + ", description=" + description + ", createdOn=" + createdOn + ", comments="
-				+ comments + ", topic=" + topic + "]";
+				+ comments + ", topic=" + topic + ", createdBy=" + createdBy + "]";
 	}
 	
 }

@@ -3,9 +3,11 @@ package com.stackroute.qna.util;
 import com.stackroute.qna.TO.CommentTO;
 import com.stackroute.qna.TO.QuestionTO;
 import com.stackroute.qna.TO.TopicTO;
+import com.stackroute.qna.TO.UserTO;
 import com.stackroute.qna.entity.CommentEntity;
 import com.stackroute.qna.entity.QuestionEntity;
 import com.stackroute.qna.entity.TopicEntity;
+import com.stackroute.qna.entity.UserEntity;
 
 public class QnaUtil {
 	
@@ -19,7 +21,7 @@ public class QnaUtil {
 		to.setId(entity.getId());
 		to.setDescription(entity.getDescription());
 		to.setCreatedOn(entity.getCreatedOn());
-		
+		to.setCreatedBy(getTOfromEntity(entity.getCreatedBy()));
 		return to;
 	}
 
@@ -33,6 +35,7 @@ public class QnaUtil {
 		entity.setId(to.getId());
 		entity.setDescription(to.getDescription());
 		entity.setCreatedOn(to.getCreatedOn());
+		entity.setCreatedBy(getEntityFromTO(to.getCreatedBy()));
 		return entity;
 	}
 	
@@ -45,7 +48,7 @@ public class QnaUtil {
 		to.setId(entity.getId());
 		to.setDescription(entity.getDescription());
 		to.setCreatedOn(entity.getCreatedOn());
-		
+		to.setCreatedBy(getTOfromEntity(entity.getCreatedBy()));
 		return to;
 	}
 
@@ -58,6 +61,7 @@ public class QnaUtil {
 		entity.setId(to.getId());
 		entity.setDescription(to.getDescription());
 		entity.setCreatedOn(to.getCreatedOn());
+		entity.setCreatedBy(getEntityFromTO(to.getCreatedBy()));
 		return entity;
 	}
 	
@@ -70,7 +74,7 @@ public class QnaUtil {
 		to.setId(entity.getId());
 		to.setDescription(entity.getDescription());
 		to.setCreatedOn(entity.getCreatedOn());
-		
+		to.setCreatedBy(getTOfromEntity(entity.getCreatedBy()));
 		return to;
 	}
 
@@ -83,7 +87,36 @@ public class QnaUtil {
 		entity.setId(to.getId());
 		entity.setDescription(to.getDescription());
 		entity.setCreatedOn(to.getCreatedOn());
+		entity.setCreatedBy(getEntityFromTO(to.getCreatedBy()));
 		return entity;
+	}
+	
+	//User
+
+	public static UserTO getTOfromEntity(UserEntity userEntity) {
+		if(null==userEntity) {
+			return null;
+		}
+
+		UserTO userTO = new UserTO();
+		userTO.setId(userEntity.getId());
+		userTO.setEmail(userEntity.getEmail());
+		userTO.setFirstName(userEntity.getFirstName());
+		userTO.setLastName(userEntity.getLastName());
+		return userTO;
+	}
+
+	public static UserEntity getEntityFromTO(UserTO userTO) {
+		if(null==userTO) {
+			return null;
+		}
+
+		UserEntity userEntity = new UserEntity();
+		userEntity.setId(userTO.getId());
+		userEntity.setEmail(userTO.getEmail());
+		userEntity.setFirstName(userTO.getFirstName());
+		userEntity.setLastName(userTO.getLastName());
+		return userEntity;
 	}
 
 }
