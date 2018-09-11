@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,8 +24,8 @@ public class CommentEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_ON")
 	private Date createdOn;
-	
-	@JoinColumn(name="id", nullable=false)
+	@ManyToOne()
+	@JoinColumn(name="question_id",referencedColumnName="id" ,nullable=false)
 	private QuestionEntity question;
 	
 	public int getId() {

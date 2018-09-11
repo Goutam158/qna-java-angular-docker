@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -27,7 +28,8 @@ public class QuestionEntity {
 	private Date createdOn;
 	@OneToMany(mappedBy="question")
 	private Set<CommentEntity> comments;
-	@JoinColumn(name="id", nullable=false)
+	@ManyToOne()
+	@JoinColumn(name="topic_id",referencedColumnName="id", nullable=false)
 	private TopicEntity topic;
 	public int getId() {
 		return id;

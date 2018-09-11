@@ -23,7 +23,7 @@ public class QuestionEndpoint {
 	private QuestionService service;
 	
 	@PostMapping(value="/", consumes="application/json")
-	public boolean addQuestion(@RequestBody QuestionTO to) throws QuestionNotFoundException {
+	public boolean addQuestion(@RequestBody QuestionTO to) throws QuestionNotFoundException, TopicNotFoundException {
 		return service.addQuestion(to);
 	}
 	

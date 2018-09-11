@@ -1,19 +1,20 @@
 package com.stackroute.qna.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.stackroute.qna.TO.CommentTO;
 import com.stackroute.qna.TO.QuestionTO;
-import com.stackroute.qna.TO.TopicTO;
 import com.stackroute.qna.entity.QuestionEntity;
 import com.stackroute.qna.entity.TopicEntity;
 import com.stackroute.qna.exception.QuestionNotFoundException;
 import com.stackroute.qna.exception.TopicNotFoundException;
 import com.stackroute.qna.repository.QuestionRepository;
+import com.stackroute.qna.repository.TopicRepository;
 import com.stackroute.qna.util.QnaUtil;
 
 @Service
@@ -21,6 +22,9 @@ public class QuestionService {
 
 	@Autowired
 	private QuestionRepository questionRepository;
+	
+	@Autowired
+	private TopicRepository topicRepository;
 
 	public boolean deleteQuestion(int id) throws QuestionNotFoundException {
 		QuestionEntity entity = questionRepository.findOne(id);
@@ -31,14 +35,23 @@ public class QuestionService {
 		return true;
 	}
 	
-	public boolean addQuestion(QuestionTO to) throws QuestionNotFoundException {
+	public boolean addQuestion(QuestionTO to) throws QuestionNotFoundException, TopicNotFoundException {
 		
-		if(to==null) {
+		if(to == null) {
 			throw new QuestionNotFoundException("Question is not proper");
 		}
-		QuestionEntity entity = QnaUtil.getEntityFromTO(to);
-		entity = questionRepository.save(entity);
-		if(entity.getId()>0) {
+		if(null == to.getTopic()) {
+			throw new TopicNotFoundException("Reference Topic not found");
+		}
+		TopicEntity topic  = topicRepository.findOne(to.getTopic().getId());
+		if(null == topic) {
+			throw new TopicNotFoundException("Reference Topic not found");
+		}
+		QuestionEntity question = QnaUtil.getEntityFromTO(to);
+		question.setTopic(topic);
+		question.setCreatedOn(new Date());
+		question = questionRepository.save(question);
+		if(question.getId()>0) {
 			return true;
 		}
 		return false;
@@ -50,12 +63,13 @@ public class QuestionService {
 			throw new QuestionNotFoundException("Question not found for id "+id);
 		}
 		QuestionTO to = QnaUtil.getTOfromEntity(entity);
-		List<CommentTO> questions = new ArrayList<>();
+		Set<CommentTO> comments = new HashSet<>();
 		entity.getComments()
 		.forEach(
-				q -> questions
+				q -> comments
 				.add(QnaUtil.getTOfromEntity(q))
 				);
+		to.setComments(comments);
 		return to;
 	}
 

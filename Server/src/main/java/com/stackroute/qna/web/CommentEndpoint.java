@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.stackroute.qna.TO.CommentTO;
 import com.stackroute.qna.exception.CommentNotFoundException;
+import com.stackroute.qna.exception.QuestionNotFoundException;
 import com.stackroute.qna.service.CommentService;
 
 @RestController
@@ -20,7 +21,7 @@ public class CommentEndpoint {
 	private CommentService service;
 	
 	@PostMapping(value="/", consumes="application/json")
-	public boolean addComment(@RequestBody CommentTO to) throws CommentNotFoundException {
+	public boolean addComment(@RequestBody CommentTO to) throws CommentNotFoundException, QuestionNotFoundException {
 		return service.addComment(to);
 	}
 	

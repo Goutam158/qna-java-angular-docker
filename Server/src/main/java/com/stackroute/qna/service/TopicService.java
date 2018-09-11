@@ -1,7 +1,10 @@
 package com.stackroute.qna.service;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +43,7 @@ public class TopicService {
 			throw new TopicNotFoundException("Topic is not proper");
 		}
 		TopicEntity entity = QnaUtil.getEntityFromTO(to);
+		entity.setCreatedOn(new Date());
 		entity = topicRepository.save(entity);
 		if(entity.getId()>0) {
 			return true;
@@ -53,12 +57,13 @@ public class TopicService {
 			throw new TopicNotFoundException("Topic not found for id "+id);
 		}
 		TopicTO to = QnaUtil.getTOfromEntity(entity);
-		List<QuestionTO> questions = new ArrayList<>();
+		Set<QuestionTO> questions = new HashSet<>();
 		entity.getQuestions()
 		.forEach(
 				q -> questions
 				.add(QnaUtil.getTOfromEntity(q))
 				);
+		to.setQuestions(questions);
 		return to;
 	}
 
