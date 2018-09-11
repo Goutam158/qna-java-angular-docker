@@ -1,0 +1,23 @@
+
+<mat-card class="login-container">
+    <form class="login-form">
+        
+        <h1 class="mat-h1" id="text-h1-login">Login</h1>
+        <h3 id="text-h3-modal-error-message" class="mat-h3" style="color:red;">{{errorMesage}}</h3>
+        <h3 id="text-h3-modal-success-message" class="mat-h3" style="color:green;">{{message}}</h3>
+    
+        <mat-form-field style="padding:5px;">
+          <input matInput placeholder="Email" name="loginEmail" [(ngModel)]="email">
+        </mat-form-field>
+    
+        <mat-form-field style="padding:5px;">
+          <input matInput type="password" placeholder="Password" name="loginPassword"  [(ngModel)]="password">
+        </mat-form-field>
+        <div>
+            <button id="btn-login" mat-raised-button color="primary" (click)="login()" style="float: right;">Login</button>
+            <button id="btn-clear" mat-raised-button  (click)="clear()" style="float: right; margin-right:5px;">Clear</button>
+            <button id="btn-goto-signup" mat-raised-button color="accent" routerLink="/signup" style="float: left;">Signup</button>
+        </div>
+    
+      </form>
+    </mat-card>
