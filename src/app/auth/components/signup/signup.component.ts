@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { UserModel } from '../../../core/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qna-signup',
@@ -10,10 +11,11 @@ import { UserModel } from '../../../core/user.model';
 export class SignupComponent {
 
 
-  errorMesage:string;
+  errorMessage:string;
   message:string;
   userModel:UserModel = new UserModel();
-  constructor(private _authService:AuthService) { }
+  constructor(private _authService:AuthService,
+              private _router:Router) { }
 
   signup(){
     if(this.validateForm()){
@@ -23,11 +25,12 @@ export class SignupComponent {
             this.clear();
             console.log(res);
             this.message=res;
+            this._router.navigateByUrl('/login');
           },
-          error=>{
-            console.error(error);
+          errorResp=>{
+            console.error(errorResp.error);
             this.message=undefined;
-            this.errorMesage = error;
+            this.errorMessage = errorResp.error;
           }
         );
     }
@@ -35,27 +38,27 @@ export class SignupComponent {
 
   private validateForm():boolean{
     if(this.userModel.firstName == undefined || this.userModel.firstName == null || this.userModel.firstName ==''){
-      this.errorMesage = 'First Name is blank';
+      this.errorMessage = 'First Name is blank';
       return false;
     }
     if(this.userModel.lastName == undefined || this.userModel.lastName == null || this.userModel.lastName ==''){
-      this.errorMesage = 'Last Name is blank';
+      this.errorMessage = 'Last Name is blank';
       return false;
     }
     if(this.userModel.email == undefined || this.userModel.email == null || this.userModel.email ==''){
-      this.errorMesage = 'Email is blank';
+      this.errorMessage = 'Email is blank';
       return false;
     }
     if(this.userModel.password == undefined || this.userModel.password == null || this.userModel.password ==''){
-      this.errorMesage = 'Password is blank';
+      this.errorMessage = 'Password is blank';
       return false;
     }
     if(this.userModel.retypePassword == undefined || this.userModel.retypePassword == null || this.userModel.retypePassword ==''){
-      this.errorMesage = 'Retype password is blank';
+      this.errorMessage = 'Retype password is blank';
       return false;
     }
     if( this.userModel.password != this.userModel.retypePassword){
-      this.errorMesage = 'Password and Retype password is not matching';
+      this.errorMessage = 'Password and Retype password is not matching';
       return false;
     }
   
@@ -63,7 +66,7 @@ export class SignupComponent {
   }
 
   clear(){
-    this.errorMesage = undefined;
+    this.errorMessage = undefined;
     this.message = undefined;
     this.userModel = new UserModel();
   }

@@ -19,7 +19,7 @@ import com.stackroute.qna.service.CommentService;
 
 @RestController
 @RequestMapping("/qna/api/v1/comment")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin
 public class CommentEndpoint {
 
 	@Autowired

@@ -1,0 +1,11 @@
+<div style="width:100%; text-align:center">
+<div *ngIf="!isLoggedIn">
+    <button mat-raised-button routerLink="/login" color="primary">Login</button>
+    <button mat-raised-button routerLink="/signup" color="accent">Signup</button>
+</div>
+<div *ngIf="isLoggedIn">
+    <button mat-raised-button routerLink="/" color="primary">Home</button>
+    <button mat-raised-button (click)="logout()" color="accent">Logout</button>
+</div>
+</div>
+<ng-content></ng-content>

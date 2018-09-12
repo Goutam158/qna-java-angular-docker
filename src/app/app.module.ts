@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -25,6 +28,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes, { useHash :true }
     ),
+    MatButtonModule,
+    MatIconModule,
     CoreModule,
     AuthModule
   ],

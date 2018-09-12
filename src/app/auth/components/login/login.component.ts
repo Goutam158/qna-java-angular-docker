@@ -36,23 +36,14 @@ export class LoginComponent implements OnInit {
       this._authService.setToken(res);
       this.isLoggedIn=true;
       this.clear();
-      window.location.reload();
+      this._router.navigateByUrl('/dashboard');
+     // window.location.reload();
     },
     error=>{
       this.errorMessage='Invalid User Name or Password';
       console.error(error);
       this.isLoggedIn=false;
     });
-  }
-
-  logout(){
-    this._authService.logout();
-    this.isLoggedIn=false;
-    if('/movie/home/popular' == this._router.url){
-      window.location.reload();
-    }else{
-      this._router.navigateByUrl('/');
-    }
   }
 
   private clear(){

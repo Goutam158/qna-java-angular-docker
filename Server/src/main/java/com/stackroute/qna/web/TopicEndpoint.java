@@ -21,7 +21,7 @@ import com.stackroute.qna.service.TopicService;
 
 @RestController
 @RequestMapping("/qna/api/v1/topic")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin
 public class TopicEndpoint {
 
 	@Autowired

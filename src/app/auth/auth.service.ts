@@ -11,7 +11,7 @@ import { UserModel } from '../core/user.model';
 @Injectable()
 export class AuthService {
 authEndpoint : string = 'http://localhost:8080/qna/auth-api/v1';
-private TOKEN = 'movie-auth-jwt-token';
+private TOKEN = 'qna-auth-jwt-token';
     constructor( private  _http: HttpClient) {}
 
     login(email:string, password:string):Observable<any>{
@@ -22,7 +22,7 @@ private TOKEN = 'movie-auth-jwt-token';
     signup(userModel:UserModel):Observable<any>{
         console.log(userModel);
         return this._http
-        .post(`${this.authEndpoint}/auth/signup`,userModel,{responseType : 'text'});
+        .post(`${this.authEndpoint}/signup`,userModel,{responseType : 'text'});
     }
 
     setToken(token:string){

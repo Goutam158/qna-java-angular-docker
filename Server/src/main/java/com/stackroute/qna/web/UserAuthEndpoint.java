@@ -16,8 +16,8 @@ import com.stackroute.qna.exception.UserNotFoundException;
 import com.stackroute.qna.service.UserService;
 
 @RestController
-@RequestMapping("/qna/auth-api/v1/")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin
+@RequestMapping("/qna/auth-api/v1")
 public class UserAuthEndpoint {
 
 	@Autowired
@@ -32,7 +32,7 @@ public class UserAuthEndpoint {
 		return new ResponseEntity<String>(token, HttpStatus.OK);
 	}
 
-	@PostMapping(value="/signup", produces="text/html")
+	@PostMapping(value="/signup", produces="text/html", consumes="application/json")
 	public ResponseEntity<String> signup(@RequestBody UserTO newUser) {
 		boolean status = false;
 		if(null == newUser) {
@@ -41,7 +41,7 @@ public class UserAuthEndpoint {
 		try {
 			status = userService.addUser(newUser);
 		} catch (UserAlreadyExistsException | UserNotFoundException e) {
-			return new ResponseEntity<String>("User signed up failed with Email "+newUser.getEmail()+" as "+e.getMessage(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		if(status) {
 			return new ResponseEntity<String>("User signed up successfully with Email "+newUser.getEmail(), HttpStatus.CREATED);

@@ -1,3 +1,41 @@
-<p>
-  dashboard works!
-</p>
+<qna-container>
+<div class="dashboard-heading">
+<h1 class="mat-h1" id="text-h1-topics">Topics</h1>
+</div>
+<div class="dashboard-card-container">
+<mat-card *ngFor='let topic of topics | async' class="dashboard-card">
+  <h2 class="mat-h2">{{topic.name}}</h2>
+
+  <div style="display:flex">
+  <p style="flex:1">
+  <span style="color:#ff4081">{{topic.createdOn | date}}</span>
+  <br/>
+    <span style="color:#000000" class="mat-h4">{{topic.createdBy.firstName}} {{topic.createdBy.lastName}}</span>
+    <span style="color:lightslategray" class="mat-h5"> {{topic.createdBy.email}}</span>
+  </p>
+  <p style="flex:1"> 
+      <button mat-raised-button color="primary" routerLink="/topic-details/{{topic.id}}">View Topic Details</button>
+  </p>
+  
+</div>
+
+  <p>{{topic.description}}</p>
+  
+</mat-card>
+<mat-card  class="dashboard-card">
+    <h2 class="mat-h2">New Topic</h2>
+<h3 id="text-h3-error-message" class="mat-h3" style="color:red;">{{errorMessage}}</h3>
+<form style="display:flex; flex-direction:column">
+  <mat-form-field>
+  <input matInput type="text" name="toipcName" placeholder="Topic name"  [(ngModel)]="topic.name"/>
+</mat-form-field>
+<mat-form-field>
+  <textarea 
+  matInput
+  name="toipcDescription" placeholder="Topic description"  [(ngModel)]="topic.description"></textarea>
+</mat-form-field>
+  <button mat-raised-button color="primary" (click)="addTopic()">Add Topic</button>
+</form>
+</mat-card>
+</div>
+</qna-container>
