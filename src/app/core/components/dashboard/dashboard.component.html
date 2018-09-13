@@ -1,20 +1,25 @@
 <qna-container>
-<div class="dashboard-heading">
+<div class="qna-heading">
 <h1 class="mat-h1" id="text-h1-topics">Topics</h1>
 </div>
-<div class="dashboard-card-container">
-<mat-card *ngFor='let topic of topics | async' class="dashboard-card">
+<div class="qna-card-container">
+<mat-card *ngFor='let topic of topics | async' class="qna-card">
   <h2 class="mat-h2">{{topic.name}}</h2>
 
   <div style="display:flex">
-  <p style="flex:1">
+  <p style="flex:3">
   <span style="color:#ff4081">{{topic.createdOn | date}}</span>
   <br/>
     <span style="color:#000000" class="mat-h4">{{topic.createdBy.firstName}} {{topic.createdBy.lastName}}</span>
     <span style="color:lightslategray" class="mat-h5"> {{topic.createdBy.email}}</span>
   </p>
   <p style="flex:1"> 
-      <button mat-raised-button color="primary" routerLink="/topic-details/{{topic.id}}">View Topic Details</button>
+      <button mat-raised-button color="primary" routerLink="/topic-details/{{topic.id}}" style="margin:2px">
+        Details
+      </button>
+      <button mat-button color="warn"(click)="deleteTopic(topic.id)" style="margin:2px;">
+          Delete
+        </button>
   </p>
   
 </div>
@@ -22,7 +27,7 @@
   <p>{{topic.description}}</p>
   
 </mat-card>
-<mat-card  class="dashboard-card">
+<mat-card  class="qna-card" style="border: 1.5px dashed #9da0a3">
     <h2 class="mat-h2">New Topic</h2>
 <h3 id="text-h3-error-message" class="mat-h3" style="color:red;">{{errorMessage}}</h3>
 <form style="display:flex; flex-direction:column">

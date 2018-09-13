@@ -16,12 +16,9 @@ export class DashboardComponent implements OnInit {
   errorMessage : string;
   
   ngOnInit() {
-    this._getTopics();
+    this.getTopics();
   }
 
-  private _getTopics(){
-    this.topics = this._coreService.getTopics()  
-  }
 
   addTopic(){
     if(this.topic.name==undefined){
@@ -34,15 +31,35 @@ export class DashboardComponent implements OnInit {
     }
     this._coreService.addTopic(this.topic).subscribe(
       res=>{
-        this._getTopics();
-        this.topic = new TopicModel();
-        this.errorMessage = undefined;
+        this.clear();
+        this.getTopics();
       },
       errorResponse=>{
         console.error(errorResponse.error);
         this.errorMessage = errorResponse.error;
       }
     );
+  }
+
+  deleteTopic(id:number){
+    this._coreService.deleteTopic(id).subscribe(
+      res=>{
+        this.clear();
+        this.getTopics();
+      },
+      errorResponse=>{
+        this.errorMessage = errorResponse.error;
+      }
+    );
+  }
+
+  private getTopics(){
+    this.topics = this._coreService.getTopics()  
+  }
+
+  private clear(){
+    this.topic = new TopicModel();
+    this.errorMessage = undefined;
   }
 
 }
