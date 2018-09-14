@@ -1,5 +1,7 @@
 package com.stackroute.qna.web;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,7 @@ public class UserAuthEndpoint {
 	}
 
 	@PostMapping(value="/signup", produces="text/html", consumes="application/json")
-	public ResponseEntity<String> signup(@RequestBody UserTO newUser) {
+	public ResponseEntity<String> signup(@Valid @RequestBody UserTO newUser) {
 		boolean status = false;
 		if(null == newUser) {
 			return new ResponseEntity<String>("User cannot be null", HttpStatus.BAD_REQUEST);

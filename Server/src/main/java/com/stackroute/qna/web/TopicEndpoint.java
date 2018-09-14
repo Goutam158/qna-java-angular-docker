@@ -3,6 +3,7 @@ package com.stackroute.qna.web;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,7 +34,7 @@ public class TopicEndpoint {
 	}
 	
 	@PostMapping(value="", consumes="application/json")
-	public boolean addTopic(@RequestBody TopicTO to, HttpServletRequest request) throws TopicNotFoundException, UserNotFoundException {
+	public boolean addTopic(@Valid @RequestBody TopicTO to, HttpServletRequest request) throws TopicNotFoundException, UserNotFoundException {
 		String email = (String)request.getAttribute("email");
 		return service.addTopic(to, email);
 	}

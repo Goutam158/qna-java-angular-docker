@@ -3,10 +3,14 @@ package com.stackroute.qna.TO;
 import java.util.Date;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class TopicTO {
 	
 	private int id;
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String description;
 	private Date createdOn;
 	private Set<QuestionTO> questions;

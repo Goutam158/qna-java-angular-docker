@@ -2,12 +2,21 @@ package com.stackroute.qna.TO;
 
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class UserTO {
 
 	private int id;
+
+	@Pattern(regexp="^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,4}$")
 	private String email;
+	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
 	private String password;
+	@Pattern(regexp="^[a-zA-Z]+$")
 	private String firstName;
+	@Pattern(regexp="^[a-zA-Z]+$")
 	private String lastName;
 	private Date created;
 	

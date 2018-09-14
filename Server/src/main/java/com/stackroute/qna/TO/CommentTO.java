@@ -2,11 +2,17 @@ package com.stackroute.qna.TO;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class CommentTO {
 	
 	private int id;
+	@NotBlank
 	private String description;
 	private Date createdOn;
+	@NotNull
 	private QuestionTO question;
 	private UserTO createdBy;
 	public int getId() {

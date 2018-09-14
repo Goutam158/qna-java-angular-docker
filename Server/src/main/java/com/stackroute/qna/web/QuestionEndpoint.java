@@ -1,6 +1,7 @@
 package com.stackroute.qna.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,7 +29,7 @@ public class QuestionEndpoint {
 	private QuestionService service;
 	
 	@PostMapping(value="", consumes="application/json")
-	public boolean addQuestion(@RequestBody QuestionTO to, HttpServletRequest request) throws QuestionNotFoundException, TopicNotFoundException, UserNotFoundException {
+	public boolean addQuestion(@Valid @RequestBody QuestionTO to, HttpServletRequest request) throws QuestionNotFoundException, TopicNotFoundException, UserNotFoundException {
 		String email = (String)request.getAttribute("email");
 		return service.addQuestion(to, email);
 	}

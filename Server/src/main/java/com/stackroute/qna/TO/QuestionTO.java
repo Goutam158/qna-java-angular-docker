@@ -3,14 +3,18 @@ package com.stackroute.qna.TO;
 import java.util.Date;
 import java.util.Set;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.stackroute.qna.entity.TopicEntity;
 
 public class QuestionTO {
 
 	private int id;
+	@NotBlank
 	private String description;
 	private Date createdOn;
 	private Set<CommentTO> comments;
+	@NotBlank
 	private TopicEntity topic;
 	private UserTO createdBy;
 	public int getId() {

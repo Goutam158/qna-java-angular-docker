@@ -1,6 +1,7 @@
 package com.stackroute.qna.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +27,7 @@ public class CommentEndpoint {
 	private CommentService service;
 	
 	@PostMapping(value="", consumes="application/json")
-	public boolean addComment(@RequestBody CommentTO to, HttpServletRequest request) throws CommentNotFoundException, QuestionNotFoundException, UserNotFoundException {
+	public boolean addComment(@Valid @RequestBody CommentTO to, HttpServletRequest request) throws CommentNotFoundException, QuestionNotFoundException, UserNotFoundException {
 		String email = (String)request.getAttribute("email");
 		return service.addComment(to,email);
 	}
