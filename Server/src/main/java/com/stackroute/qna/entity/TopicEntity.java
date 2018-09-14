@@ -3,6 +3,7 @@ package com.stackroute.qna.entity;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class TopicEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_ON")
 	private Date createdOn;
-	@OneToMany(mappedBy="topic")
+	@OneToMany(mappedBy="topic",orphanRemoval=true, cascade = CascadeType.ALL)
 	private Set<QuestionEntity> questions;
 	@ManyToOne()
 	@JoinColumn(name="user_id",referencedColumnName="user_id" ,nullable=false)

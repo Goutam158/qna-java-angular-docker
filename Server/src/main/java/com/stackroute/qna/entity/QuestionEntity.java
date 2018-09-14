@@ -27,7 +27,7 @@ public class QuestionEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_ON")
 	private Date createdOn;
-	@OneToMany(mappedBy="question")
+	@OneToMany(mappedBy="question",orphanRemoval=true, cascade = CascadeType.ALL)
 	private Set<CommentEntity> comments;
 	@ManyToOne()
 	@JoinColumn(name="topic_id",referencedColumnName="id", nullable=false)
