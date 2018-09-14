@@ -4,6 +4,8 @@ import { QuestionModel } from '../../question.model';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { CommentModel } from '../../comment.model';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'qna-question',
@@ -16,7 +18,8 @@ export class QuestionComponent implements OnInit {
   comment:CommentModel = new CommentModel();
   errorMessage:string;
   constructor(private _route:ActivatedRoute,
-              private _coreService:CoreService) { }
+              private _coreService:CoreService,
+              private _dialog : MatDialog) { }
 
   ngOnInit(){
     this._route.params.subscribe(
@@ -62,6 +65,18 @@ export class QuestionComponent implements OnInit {
   }
 
   deleteComment(id:number){
+    const dialogRef = this._dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: 'Do you want to delete the comment?'
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this._deleteComment(id);
+      }
+    });
+  }
+  private _deleteComment(id:number){
     this._coreService.deleteComment(id).subscribe(
       res=>{
         this.clear();

@@ -19,6 +19,7 @@ import { QuestionComponent } from './components/question/question.component';
 import { CoreService } from './core.service';
 import { ContainerComponent } from './components/container/container.component';
 import { InterceptorService } from './interceptor.service';
+import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 
 const coreRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -44,13 +45,16 @@ const coreRoutes: Routes = [
   declarations: [
     DashboardComponent, 
     TopicComponent, 
-    QuestionComponent, ContainerComponent],
+    QuestionComponent, 
+    ContainerComponent, 
+    ConfirmationDialogComponent],
   providers: [CoreService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
     }
-  ]
+  ],
+  entryComponents:[ConfirmationDialogComponent]
 })
 export class CoreModule { }

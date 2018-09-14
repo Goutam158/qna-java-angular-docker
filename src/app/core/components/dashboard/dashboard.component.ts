@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CoreService } from '../../core.service';
 import { TopicModel } from '../../topic.model';
 import { Observable } from 'rxjs/Observable';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'qna-dashboard',
@@ -10,7 +12,8 @@ import { Observable } from 'rxjs/Observable';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private _coreService : CoreService) { }
+  constructor(private _coreService : CoreService,
+              private _dialog:MatDialog) { }
   topics : Observable<TopicModel[]>;
   topic: TopicModel = new TopicModel();
   errorMessage : string;
@@ -42,6 +45,18 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteTopic(id:number){
+    const dialogRef = this._dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: 'Deleting the Topic would delete all of the Questions and Comments it had. Do you still want to delete the Topic?'
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this._deleteTopic(id);
+      }
+    });
+  }
+  private _deleteTopic(id:number){
     this._coreService.deleteTopic(id).subscribe(
       res=>{
         this.clear();

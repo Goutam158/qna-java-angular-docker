@@ -1,4 +1,4 @@
-<div style="width:100%; text-align:center">
+<div class="container-header">
 <div *ngIf="!isLoggedIn">
     <button mat-raised-button routerLink="/login" color="primary">Login</button>
     <button mat-raised-button routerLink="/signup" color="accent">Signup</button>
@@ -8,4 +8,7 @@
     <button mat-raised-button (click)="logout()" color="accent">Logout</button>
 </div>
 </div>
-<ng-content></ng-content>
+<div style="padding-top:1.2em;">
+        <ng-content></ng-content>
+</div>
+
