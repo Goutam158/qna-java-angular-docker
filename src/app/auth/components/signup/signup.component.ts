@@ -16,7 +16,7 @@ export class SignupComponent {
   userModel:UserModel = new UserModel();
   nameRegex:RegExp = new RegExp('^[a-zA-Z]+$');
   emailRegex:RegExp = new RegExp('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,4}$');
-  passwordRegex:RegExp = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{8,})');
+  passwordRegex:RegExp = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$');
   constructor(private _authService:AuthService,
               private _router:Router) { }
 
@@ -70,7 +70,7 @@ export class SignupComponent {
       return false;
     }
     if(!this.passwordRegex.test(this.userModel.password)){
-      this.errorMessage = 'Password must contain Minimum eight characters, at least one letter, one number';
+      this.errorMessage = 'Password must contain Minimum eight characters, at least one upper case and lower case letter, one number, one special charecter';
       return false;  
     }
     if(this.userModel.retypePassword == undefined || this.userModel.retypePassword == null || this.userModel.retypePassword ==''){
