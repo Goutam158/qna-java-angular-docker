@@ -21,6 +21,8 @@ import com.stackroute.qna.entity.UserEntity;
 import com.stackroute.qna.exception.UserAlreadyExistsException;
 import com.stackroute.qna.exception.UserNotFoundException;
 import com.stackroute.qna.repository.UserRepository;
+import com.stackroute.qna.util.QnaUtil;
+import com.stackroute.qna.util.UserAuthUtil;
 
 @RunWith(SpringRunner.class)
 public class UserServiceTest {
@@ -43,6 +45,26 @@ public class UserServiceTest {
 		user.setEmail("test.user@exmaple.com");
 		user.setPassword("Test@pass1");
 		user.setCreated(new Date());
+	}
+	
+	@Test
+	public void whenLogin() {
+		when(userRepository.findByEmailAndPassword("test.user@exmaple.com", "Test@pass1"))
+		.thenReturn(this.user);
+		
+		String token = userService.login("test.user@exmaple.com", "Test@pass1");
+		assertThat(token)
+		.isEqualTo(UserAuthUtil.generateToken("test.user@exmaple.com"));
+	}
+	
+	@Test
+	public void whenLoginError() {
+		when(userRepository.findByEmailAndPassword("test.user@exmaple.com", "Test@pass1"))
+		.thenReturn(null);
+		
+		String token = userService.login("test.user@exmaple.com", "Test@pass1");
+		assertThat(token)
+		.isNull();
 	}
 
 	@Test

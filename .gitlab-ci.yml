@@ -6,6 +6,7 @@ services:
   - 'mysql:5.5'
 variables:
  MYSQL_DATABASE: qnadb
+ MYSQL_CI_URL: jdbc:mysql://mysql/qnadb
  MYSQL_USER: app_root
  MYSQL_PASSWORD: root
  MYSQL_ROOT_PASSWORD: root
