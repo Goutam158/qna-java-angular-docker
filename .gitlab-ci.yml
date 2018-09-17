@@ -7,7 +7,7 @@ services:
 variables:
  MYSQL_DATABASE: qnadb
  MYSQL_USER: app_root
- MYSQL_PASSWORD: root123
+ MYSQL_PASSWORD: root
  MYSQL_ROOT_PASSWORD: root
 cache:
  paths:
