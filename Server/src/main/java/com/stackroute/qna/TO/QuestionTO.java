@@ -15,7 +15,7 @@ public class QuestionTO {
 	private Date createdOn;
 	private Set<CommentTO> comments;
 	@NotBlank
-	private TopicEntity topic;
+	private TopicTO topic;
 	private UserTO createdBy;
 	public int getId() {
 		return id;
@@ -41,10 +41,10 @@ public class QuestionTO {
 	public void setComments(Set<CommentTO> comments) {
 		this.comments = comments;
 	}
-	public TopicEntity getTopic() {
+	public TopicTO getTopic() {
 		return topic;
 	}
-	public void setTopic(TopicEntity topic) {
+	public void setTopic(TopicTO topic) {
 		this.topic = topic;
 	}
 	public UserTO getCreatedBy() {

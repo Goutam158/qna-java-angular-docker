@@ -17,7 +17,7 @@ import com.stackroute.qna.util.UserAuthUtil;
 public class UserService {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	
 	public String login(String email, String password) {
 		String token = null;
@@ -45,7 +45,7 @@ public class UserService {
 		return true;
 	}
 	
-	public boolean UpdateUser(UserTO userTO) throws UserNotFoundException {
+	public boolean updateUser(UserTO userTO) throws UserNotFoundException {
 		if(null==userTO) {
 			throw new UserNotFoundException("User cannot be null");
 		}
@@ -61,13 +61,13 @@ public class UserService {
 		return true;
 	}
 	
-	public boolean deleteUser(String userName) throws UserNotFoundException {
-		if(null==userName) {
+	public boolean deleteUser(String email) throws UserNotFoundException {
+		if(null==email) {
 			throw new UserNotFoundException("User cannot be null");
 		}
-		Optional<UserEntity> userOpt =  userRepository.findByEmail(userName);
+		Optional<UserEntity> userOpt =  userRepository.findByEmail(email);
 		if(!userOpt.isPresent()) {
-			throw new UserNotFoundException("User with email "+userName+" Not found");
+			throw new UserNotFoundException("User with email "+email+" Not found");
 		}
 		UserEntity user = userOpt.get();
 		userRepository.delete(user);

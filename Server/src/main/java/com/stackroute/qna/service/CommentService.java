@@ -36,11 +36,11 @@ public class CommentService {
 			throw new CommentNotFoundException("Comment is not proper");
 		}
 		if(null == to.getQuestion()) {
-			throw new QuestionNotFoundException("Reference question not found");
+			throw new QuestionNotFoundException("Reference Question not found");
 		}
-		QuestionEntity question = questionRepository.getOne(to.getQuestion().getId());
+		QuestionEntity question = questionRepository.findOne(to.getQuestion().getId());
 		if(null == question) {
-			throw new QuestionNotFoundException("Reference question not found");
+			throw new QuestionNotFoundException("Reference Question not found");
 		}
 		Optional<UserEntity> user = userRepository.findByEmail(email);
 		if(!user.isPresent()) {
