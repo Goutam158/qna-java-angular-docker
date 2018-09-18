@@ -21,8 +21,8 @@ import com.stackroute.qna.entity.UserEntity;
 import com.stackroute.qna.exception.UserAlreadyExistsException;
 import com.stackroute.qna.exception.UserNotFoundException;
 import com.stackroute.qna.repository.UserRepository;
-import com.stackroute.qna.util.QnaUtil;
-import com.stackroute.qna.util.UserAuthUtil;
+
+import io.jsonwebtoken.Jwts;
 
 @RunWith(SpringRunner.class)
 public class UserServiceTest {
@@ -53,8 +53,14 @@ public class UserServiceTest {
 		.thenReturn(this.user);
 		
 		String token = userService.login("test.user@exmaple.com", "Test@pass1");
-		assertThat(token)
-		.isEqualTo(UserAuthUtil.generateToken("test.user@exmaple.com"));
+		String email = Jwts
+				.parser()
+				.setSigningKey("my$ecr3tk3y")
+				.parseClaimsJws(token)
+				.getBody()
+				.getSubject();
+		assertThat(email)
+		.isEqualTo("test.user@exmaple.com");
 	}
 	
 	@Test

@@ -24,7 +24,7 @@ public class TopicEntity {
 	private int id;
 	@Column(name="NAME")
 	private String name;
-	@Column(name="DESCRIPTION")
+	@Column(name="DESCRIPTION", length=2000)
 	private String description;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_ON")

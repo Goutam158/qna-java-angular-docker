@@ -22,7 +22,7 @@ public class QuestionEntity {
 	@Id
 	@GeneratedValue
 	private int id;
-	@Column(name="DESCRIPTION")
+	@Column(name="DESCRIPTION", length=2000)
 	private String description;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_ON")
