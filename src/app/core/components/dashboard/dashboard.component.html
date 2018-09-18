@@ -3,8 +3,8 @@
 <h1 class="mat-h1" id="text-h1-topics">Topics</h1>
 </div>
 <div class="qna-card-container">
-<mat-card *ngFor='let topic of topics | async' class="qna-card">
-  <h2 class="mat-h2">{{topic.name}}</h2>
+<mat-card id=".topic-card" *ngFor='let topic of topics | async' class="qna-card">
+  <h2 class="mat-h2" id=".topic-name">{{topic.name}}</h2>
 
   <div style="display:flex">
   <p style="flex:3">
@@ -14,17 +14,17 @@
     <span style="color:lightslategray" class="mat-h5"> {{topic.createdBy.email}}</span>
   </p>
   <p style="flex:1"> 
-      <button mat-raised-button color="primary" routerLink="/topic-details/{{topic.id}}" style="margin:2px">
-        Details
+      <button id=".view-topic-details" mat-raised-button color="primary" routerLink="/topic-details/{{topic.id}}" style="margin:2px">
+        View Topic Details
       </button>
-      <button mat-button color="warn"(click)="deleteTopic(topic.id)" style="margin:2px;">
-          Delete
+      <button id=".delete-topic" mat-button color="warn"(click)="deleteTopic(topic.id)" style="margin:2px;">
+          Delete Topic
         </button>
   </p>
   
 </div>
 
-  <p>{{topic.description}}</p>
+  <p id=".topic-description">{{topic.description}}</p>
   
 </mat-card>
 <mat-card  class="qna-card" style="border: 1.5px dashed #9da0a3">
@@ -35,11 +35,11 @@
   <input matInput type="text" name="toipcName" placeholder="Topic name"  [(ngModel)]="topic.name"/>
 </mat-form-field>
 <mat-form-field>
-  <textarea 
+  <textarea id="#topic-field"
   matInput
   name="toipcDescription" placeholder="Topic description"  [(ngModel)]="topic.description"></textarea>
 </mat-form-field>
-  <button mat-raised-button color="primary" (click)="addTopic()">Add Topic</button>
+  <button id="#topic-button" mat-raised-button color="primary" (click)="addTopic()">Add Topic</button>
 </form>
 </mat-card>
 </div>

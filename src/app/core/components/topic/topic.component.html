@@ -5,28 +5,28 @@
 
     </div>
     <div class="qna-card-container">
-    <mat-card *ngFor='let question of topicDetails.questions ' class="qna-card">
+    <mat-card id=".question-card" *ngFor='let question of topicDetails.questions ' class="qna-card">
         <h2 class="mat-h2">Question</h2>
       <div style="display:flex">
       <p style="flex:3">
-      <span style="color:#ff4081">{{question.createdOn | date}}</span>
+      <span id=".question-date" style="color:#ff4081">{{question.createdOn | date}}</span>
       <br/>
         <span style="color:#000000" class="mat-h4">{{question.createdBy.firstName}} {{question.createdBy.lastName}}</span>
       <br/>
         <span style="color:lihtslategray" class="mat-h5"> {{question.createdBy.email}}</span>
       </p>
       <div style="flex:1; display:flex; flex-direction:column;"> 
-          <button mat-raised-button color="primary" routerLink="/question-details/{{question.id}}" style="margin:2px;">
-            Details
+          <button id=".view-comments" mat-raised-button color="primary" routerLink="/question-details/{{question.id}}" style="margin:2px;">
+            View Comments
           </button>
-          <button mat-button color="warn"(click)="deleteQuestion(question.id)" style="margin:2px;">
-            Delete
+          <button id=".delete-question" mat-button color="warn"(click)="deleteQuestion(question.id)" style="margin:2px;">
+            Delete Question
           </button>
       </div>
       
     </div>
     
-      <p>{{question.description}}</p>
+      <p id=".question-description">{{question.description}}</p>
       
     </mat-card>
     <mat-card  class="qna-card" style="border: 1.5px dashed #9da0a3">
@@ -34,11 +34,11 @@
     <h3 id="text-h3-error-message" class="mat-h3" style="color:red;">{{errorMessage}}</h3>
     <form style="display:flex; flex-direction:column">
     <mat-form-field>
-      <textarea 
+      <textarea id="#question-field"
       matInput
       name="questionDescription" placeholder="Question description"  [(ngModel)]="question.description"></textarea>
     </mat-form-field>
-      <button mat-raised-button color="primary" (click)="addQuestion()">Add Question</button>
+      <button id="#question-button" mat-raised-button color="primary" (click)="addQuestion()">Add Question</button>
     </form>
     </mat-card>
     </div>
