@@ -14,7 +14,6 @@ public class QuestionTO {
 	private String description;
 	private Date createdOn;
 	private Set<CommentTO> comments;
-	@NotBlank
 	private TopicTO topic;
 	private UserTO createdBy;
 	public int getId() {

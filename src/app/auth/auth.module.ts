@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AuthService } from './auth.service';
+import { AuthGuardService } from './auth-guard.service';
 
 const authRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -40,6 +41,6 @@ const authRoutes: Routes = [
   declarations: [
     LoginComponent, 
     SignupComponent],
-  providers: [AuthService]
+  providers: [AuthService, AuthGuardService]
 })
 export class AuthModule { }

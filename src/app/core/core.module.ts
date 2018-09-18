@@ -20,11 +20,12 @@ import { CoreService } from './core.service';
 import { ContainerComponent } from './components/container/container.component';
 import { InterceptorService } from './interceptor.service';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import { AuthGuardService } from '../auth/auth-guard.service';
 
 const coreRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'topic-details/:id', component: TopicComponent},
-  { path: 'question-details/:id', component: QuestionComponent }
+  { path: 'dashboard', component: DashboardComponent , canActivate: [AuthGuardService]},
+  { path: 'topic-details/:id', component: TopicComponent , canActivate: [AuthGuardService]},
+  { path: 'question-details/:id', component: QuestionComponent , canActivate: [AuthGuardService]}
 ];
 
 @NgModule({
