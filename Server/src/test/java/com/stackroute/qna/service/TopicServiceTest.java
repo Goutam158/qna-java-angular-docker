@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.stackroute.qna.TO.QuestionTO;
@@ -63,7 +64,9 @@ public class TopicServiceTest {
 		QuestionEntity question1 = new QuestionEntity();
 		question1.setId(1);
 		question1.setDescription("Question 1");
-		question1.setCreatedOn(new Date());
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -1);
+		question1.setCreatedOn(cal.getTime());
 		question1.setCreatedBy(user);
 
 		QuestionEntity question2 = new QuestionEntity();
@@ -78,7 +81,7 @@ public class TopicServiceTest {
 		TopicEntity topic1 = new TopicEntity();
 		topic1.setName("Topic 1");
 		topic1.setDescription("Topic 1 description");
-		topic1.setCreatedOn(new Date());
+		topic1.setCreatedOn(cal.getTime());
 		topic1.setId(1);
 		topic1.setCreatedBy(user);
 		topic1.setQuestions(questions);
@@ -98,7 +101,7 @@ public class TopicServiceTest {
 
 	@Test
 	public void whenGetAllTopics() {
-		when(topicRepository.findAll()).thenReturn(this.topics);
+		when(topicRepository.findAll((Sort)any())).thenReturn(this.topics);
 		List<TopicTO> topics = this.topicService.getAllTopics();
 		assertThat(topics).isNotNull();
 		assertThat(topics.size()).isEqualTo(2);

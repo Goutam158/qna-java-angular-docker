@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
@@ -70,7 +71,9 @@ public class QuestionServiceTest {
 		comment2.setCreatedBy(user);
 		comment2.setDescription("Comment 2");
 		comment2.setId(2);
-		comment2.setCreatedOn(new Date());
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, -1);
+		comment2.setCreatedOn(cal.getTime());
 		
 		Set<CommentEntity> comments = new HashSet<>();
 		comments.add(comment1);
