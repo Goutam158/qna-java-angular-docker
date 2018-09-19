@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
   }
   
   login(){
-    if(this.email==undefined){
+    if(this.email==undefined || this.email.trim() == ''){
       this.errorMessage='User Name cannot be blank';
       return;
     }
-    if(this.password==undefined){
+    if(this.password==undefined || this.password.trim() == ''){
       this.errorMessage='Password cannot be blank';
       return;
     }

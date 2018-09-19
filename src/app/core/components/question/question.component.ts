@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { CommentModel } from '../../comment.model';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'qna-question',
@@ -19,6 +19,7 @@ export class QuestionComponent implements OnInit {
   errorMessage:string;
   constructor(private _route:ActivatedRoute,
               private _coreService:CoreService,
+              private _snackBar : MatSnackBar,
               private _dialog : MatDialog) { }
 
   ngOnInit(){
@@ -27,8 +28,8 @@ export class QuestionComponent implements OnInit {
         this.questionId  = params['id'];
         this.fetchQuestionDetails();
       },
-      error =>{
-          this.errorMessage = error.error;
+      errorRes =>{
+        this._snackBar.open(`Failed to read paramterers ${errorRes.error}`,null,{duration : 6000,});
       }
     );
   }
@@ -39,14 +40,13 @@ export class QuestionComponent implements OnInit {
         this.questionDetails = res;
       },
       errorRes=>{
-        this.errorMessage = 'Failed to fetch question details';
-        console.error(errorRes.error);
+        this._snackBar.open(`Failed to fetch question details ${errorRes.error}`,null,{duration : 6000,});
       }
     );
   }
 
   addComment(){
-    if(this.comment.description==undefined){
+    if(this.comment.description==undefined || this.comment.description.trim()==''){
       this.errorMessage='Comment description cannot be blank';
       return;
     }
@@ -57,9 +57,10 @@ export class QuestionComponent implements OnInit {
         res=>{
           this.clear();
           this.fetchQuestionDetails();
+          this._snackBar.open(`Comment addition successful`,null,{duration : 4000,});
         },
         errorResponse=>{
-          this.errorMessage = errorResponse.error;
+          this._snackBar.open(`Comment addition failed  ${errorResponse.error}`,null,{duration : 4000,});
         }
       );
   }
@@ -81,9 +82,10 @@ export class QuestionComponent implements OnInit {
       res=>{
         this.clear();
         this.fetchQuestionDetails();
+        this._snackBar.open(`Comment deletion successful`,null,{duration : 4000,});
       },
       errorResponse=>{
-        this.errorMessage = errorResponse.error;
+        this._snackBar.open(`Comment deletion failed ${errorResponse.error}`,null,{duration : 4000,});
       }
     );
   }

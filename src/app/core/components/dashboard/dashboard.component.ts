@@ -3,7 +3,7 @@ import { CoreService } from '../../core.service';
 import { TopicModel } from '../../topic.model';
 import { Observable } from 'rxjs/Observable';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'qna-dashboard',
@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material';
 export class DashboardComponent implements OnInit {
 
   constructor(private _coreService : CoreService,
+              private _snackBar : MatSnackBar,
               private _dialog:MatDialog) { }
   topics : Observable<TopicModel[]>;
   topic: TopicModel = new TopicModel();
@@ -24,11 +25,11 @@ export class DashboardComponent implements OnInit {
 
 
   addTopic(){
-    if(this.topic.name==undefined){
+    if(this.topic.name==undefined || this.topic.name.trim() == ''){
       this.errorMessage='Topic name cannot be blank';
       return;
     }
-    if(this.topic.description==undefined){
+    if(this.topic.description==undefined || this.topic.description.trim() == ''){
       this.errorMessage='Topic description cannot be blank';
       return;
     }
@@ -36,10 +37,10 @@ export class DashboardComponent implements OnInit {
       res=>{
         this.clear();
         this.getTopics();
+        this._snackBar.open(`Topic addition successful`,null,{duration : 4000,});
       },
       errorResponse=>{
-        console.error(errorResponse.error);
-        this.errorMessage = errorResponse.error;
+        this._snackBar.open(`Topic addition failed ${errorResponse.error}`,null,{duration : 4000,});
       }
     );
   }
@@ -61,9 +62,10 @@ export class DashboardComponent implements OnInit {
       res=>{
         this.clear();
         this.getTopics();
+        this._snackBar.open(`Topic deletion successful`,null,{duration : 4000,});
       },
       errorResponse=>{
-        this.errorMessage = errorResponse.error;
+        this._snackBar.open(`Topic deletion failed ${errorResponse.error}`,null,{duration : 4000,});
       }
     );
   }

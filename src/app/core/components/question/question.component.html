@@ -1,9 +1,21 @@
 <qna-container *ngIf='questionDetails'>
   <div class="qna-heading">
-  <h1 class="mat-h1" id="text-h1-topics">Question</h1>
+  <h1 class="mat-h1" id="text-h1-question">Question</h1>
   <p>{{questionDetails.description}}</p>
   </div>
   <div class="qna-card-container">
+      <mat-card  class="qna-card" style="border: 1.5px dashed #9da0a3">
+          <h2 class="mat-h2">New Comment</h2>
+      <h3 id="text-h3-error-message" class="mat-h3" style="color:red;">{{errorMessage}}</h3>
+      <form style="display:flex; flex-direction:column">
+      <mat-form-field>
+        <textarea id="#comment-field"
+        matInput
+        name="commentDescription" placeholder="Comment description"  [(ngModel)]="comment.description"></textarea>
+      </mat-form-field>
+        <button id="#comment-button" mat-raised-button color="primary" (click)="addComment()">Add Comment</button>
+      </form>
+      </mat-card>
   <mat-card id=".comment-card" *ngFor='let comment of questionDetails.comments ' class="qna-card">
     <h2 class="mat-h2">Comment</h2>
     <div style="display:flex">
@@ -16,23 +28,8 @@
     <p style="flex:1"> 
         <button id=".delete-comment" mat-button color="warn" (click)="deleteComment(comment.id)">Delete Comment</button>
     </p>
-    
   </div>
-  
     <p id=".comment-description">{{comment.description}}</p>
-    
-  </mat-card>
-  <mat-card  class="qna-card" style="border: 1.5px dashed #9da0a3">
-      <h2 class="mat-h2">New Comment</h2>
-  <h3 id="text-h3-error-message" class="mat-h3" style="color:red;">{{errorMessage}}</h3>
-  <form style="display:flex; flex-direction:column">
-  <mat-form-field>
-    <textarea id="#comment-field"
-    matInput
-    name="commentDescription" placeholder="Comment description"  [(ngModel)]="comment.description"></textarea>
-  </mat-form-field>
-    <button id="#comment-button" mat-raised-button color="primary" (click)="addComment()">Add Comment</button>
-  </form>
   </mat-card>
   </div>
   </qna-container>

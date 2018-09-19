@@ -5,6 +5,18 @@
 
     </div>
     <div class="qna-card-container">
+        <mat-card  class="qna-card" style="border: 1.5px dashed #9da0a3">
+            <h2 class="mat-h2">New Question</h2>
+        <h3 id="text-h3-error-message" class="mat-h3" style="color:red;">{{errorMessage}}</h3>
+        <form style="display:flex; flex-direction:column">
+        <mat-form-field>
+          <textarea id="#question-field"
+          matInput
+          name="questionDescription" placeholder="Question description"  [(ngModel)]="question.description"></textarea>
+        </mat-form-field>
+          <button id="#question-button" mat-raised-button color="primary" (click)="addQuestion()">Add Question</button>
+        </form>
+        </mat-card>   
     <mat-card id=".question-card" *ngFor='let question of topicDetails.questions ' class="qna-card">
         <h2 class="mat-h2">Question</h2>
       <div style="display:flex">
@@ -23,23 +35,8 @@
             Delete Question
           </button>
       </div>
-      
     </div>
-    
       <p id=".question-description">{{question.description}}</p>
-      
-    </mat-card>
-    <mat-card  class="qna-card" style="border: 1.5px dashed #9da0a3">
-        <h2 class="mat-h2">New Question</h2>
-    <h3 id="text-h3-error-message" class="mat-h3" style="color:red;">{{errorMessage}}</h3>
-    <form style="display:flex; flex-direction:column">
-    <mat-form-field>
-      <textarea id="#question-field"
-      matInput
-      name="questionDescription" placeholder="Question description"  [(ngModel)]="question.description"></textarea>
-    </mat-form-field>
-      <button id="#question-button" mat-raised-button color="primary" (click)="addQuestion()">Add Question</button>
-    </form>
     </mat-card>
     </div>
     </qna-container>

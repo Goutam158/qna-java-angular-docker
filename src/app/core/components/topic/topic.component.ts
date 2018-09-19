@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { QuestionModel } from '../../question.model';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog , MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'qna-topic',
@@ -20,6 +20,7 @@ export class TopicComponent implements OnInit {
   errorMessage:string;
   constructor(private _route:ActivatedRoute,
               private _coreService:CoreService,
+              private _snackBar : MatSnackBar,
               private _dialog:MatDialog) { }
 
   ngOnInit(){
@@ -28,8 +29,8 @@ export class TopicComponent implements OnInit {
         this.topicId  = params['id'];
         this.fetchTopicDetails();
       },
-      error =>{
-          this.errorMessage = error.error;
+      errorRes =>{
+        this._snackBar.open(`Failed to read url paramterers ${errorRes.error}`,null,{duration : 6000,});
       }
     );
   }
@@ -40,14 +41,13 @@ export class TopicComponent implements OnInit {
         this.topicDetails = res;
       },
       errorRes=>{
-        this.errorMessage = 'Failed to fetch topic details';
-        console.error(errorRes.error);
+        this._snackBar.open(`Failed to fetch topic details ${errorRes.error}`,null,{duration : 6000,});
       }
     );
   }
 
   addQuestion(){
-    if(this.question.description==undefined){
+    if(this.question.description==undefined || this.question.description.trim()==''){
       this.errorMessage='Topic description cannot be blank';
       return;
     }
@@ -58,9 +58,10 @@ export class TopicComponent implements OnInit {
         res=>{
           this.clear();
           this.fetchTopicDetails();
+          this._snackBar.open(`Question addition successful`,null,{duration : 4000,});
         },
         errorResponse=>{
-          this.errorMessage = errorResponse.error;
+          this._snackBar.open(`Question addition failed`,null,{duration : 4000,});
         }
       );
   }
@@ -82,9 +83,10 @@ export class TopicComponent implements OnInit {
       res=>{
         this.clear();
         this.fetchTopicDetails();
+        this._snackBar.open(`Question deletion successful`,null,{duration : 4000,});
       },
       errorResponse=>{
-        this.errorMessage = errorResponse.error;
+        this._snackBar.open(`Question deletion failed`,null,{duration : 4000,});
       }
     );
   }

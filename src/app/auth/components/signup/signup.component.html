@@ -19,11 +19,11 @@
     </mat-form-field>
 
     <mat-form-field style="padding:5px;">
-      <input id="#password-name-field" matInput type="password" placeholder="Password" name="signupPassword"  [(ngModel)]="userModel.password">
+      <input id="#password-field" matInput type="password" placeholder="Password" name="signupPassword"  [(ngModel)]="userModel.password">
     </mat-form-field>
 
     <mat-form-field style="padding:5px;">
-        <input id="#retype-password-name-field" matInput type="password" placeholder="Retype password" name="signupRetypePassword"  [(ngModel)]="userModel.retypePassword">
+        <input id="#retype-password-field" matInput type="password" placeholder="Retype password" name="signupRetypePassword"  [(ngModel)]="userModel.retypePassword">
     </mat-form-field>
     <div>
         <button id="#btn-signup" mat-raised-button color="primary" (click)="signup()" style="float: right;">Signup</button>

@@ -1,9 +1,12 @@
 package com.stackroute.qna.service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,13 +78,15 @@ public class QuestionService {
 			throw new QuestionNotFoundException("Question not found for id "+id);
 		}
 		QuestionTO to = QnaUtil.getTOfromEntity(entity);
-		Set<CommentTO> comments = new HashSet<>();
+		TreeSet<CommentTO> comments = new TreeSet<>(
+			Comparator.comparing(CommentTO::getCreatedOn)
+		);
 		entity.getComments()
 		.forEach(
 				q -> comments
 				.add(QnaUtil.getTOfromEntity(q))
 				);
-		to.setComments(comments);
+		to.setComments(comments.descendingSet());
 		return to;
 	}
 

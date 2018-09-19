@@ -1,13 +1,17 @@
 package com.stackroute.qna.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.stackroute.qna.TO.QuestionTO;
@@ -31,7 +35,7 @@ public class TopicService {
 
 	public List<TopicTO> getAllTopics(){
 		List<TopicTO> topics = new ArrayList<>();
-		List<TopicEntity> topicEntityList = topicRepository.findAll();
+		List<TopicEntity> topicEntityList = topicRepository.findAll(new Sort(Sort.Direction.DESC,"createdOn"));
 		topicEntityList.forEach(t ->  topics.add(QnaUtil.getTOfromEntity(t)));
 		return topics;
 	}
@@ -69,13 +73,15 @@ public class TopicService {
 			throw new TopicNotFoundException("Topic not found for id "+id);
 		}
 		TopicTO to = QnaUtil.getTOfromEntity(entity);
-		Set<QuestionTO> questions = new HashSet<>();
+		TreeSet<QuestionTO> questions = new TreeSet<>(
+			Comparator.comparing(QuestionTO::getCreatedOn)
+		);
 		entity.getQuestions()
 		.forEach(
 				q -> questions
 				.add(QnaUtil.getTOfromEntity(q))
 				);
-		to.setQuestions(questions);
+		to.setQuestions(questions.descendingSet());
 		return to;
 	}
 

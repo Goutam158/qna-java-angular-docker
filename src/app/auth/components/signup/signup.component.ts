@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { UserModel } from '../../../core/user.model';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'qna-signup',
@@ -18,6 +19,7 @@ export class SignupComponent {
   emailRegex:RegExp = new RegExp('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,4}$');
   passwordRegex:RegExp = new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$');
   constructor(private _authService:AuthService,
+              private _snackBar : MatSnackBar,
               private _router:Router) { }
 
   signup(){
@@ -29,6 +31,7 @@ export class SignupComponent {
             console.log(res);
             this.message=res;
             this._router.navigateByUrl('/login');
+            this._snackBar.open(`User signup successful`,null,{duration : 4000,});
           },
           errorResp=>{
             console.error(errorResp.error);
@@ -40,7 +43,7 @@ export class SignupComponent {
   }
 
   private validateForm():boolean{
-    if(this.userModel.firstName == undefined || this.userModel.firstName == null || this.userModel.firstName ==''){
+    if(this.userModel.firstName == undefined || this.userModel.firstName == null || this.userModel.firstName.trim() ==''){
       this.errorMessage = 'First Name is blank';
       return false;
     }
@@ -49,7 +52,7 @@ export class SignupComponent {
       return false;  
     }
     
-    if(this.userModel.lastName == undefined || this.userModel.lastName == null || this.userModel.lastName ==''){
+    if(this.userModel.lastName == undefined || this.userModel.lastName == null || this.userModel.lastName.trim() ==''){
       this.errorMessage = 'Last Name is blank';
       return false;
     }
@@ -57,7 +60,7 @@ export class SignupComponent {
       this.errorMessage = 'Last Name must contain only english alphabets';
       return false;  
     }
-    if(this.userModel.email == undefined || this.userModel.email == null || this.userModel.email ==''){
+    if(this.userModel.email == undefined || this.userModel.email == null || this.userModel.email.trim() ==''){
       this.errorMessage = 'Email is blank';
       return false;
     }
@@ -65,7 +68,7 @@ export class SignupComponent {
       this.errorMessage = 'Malformed email id';
       return false;  
     }
-    if(this.userModel.password == undefined || this.userModel.password == null || this.userModel.password ==''){
+    if(this.userModel.password == undefined || this.userModel.password == null || this.userModel.password.trim() ==''){
       this.errorMessage = 'Password is blank';
       return false;
     }
@@ -73,7 +76,7 @@ export class SignupComponent {
       this.errorMessage = 'Password must contain Minimum eight characters, at least one upper case and lower case letter, one number, one special charecter';
       return false;  
     }
-    if(this.userModel.retypePassword == undefined || this.userModel.retypePassword == null || this.userModel.retypePassword ==''){
+    if(this.userModel.retypePassword == undefined || this.userModel.retypePassword == null || this.userModel.retypePassword.trim() ==''){
       this.errorMessage = 'Retype password is blank';
       return false;
     }
