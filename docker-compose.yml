@@ -1,0 +1,34 @@
+version: '2'
+services:
+  mysql:
+   image: mysql:5.5
+   ports:
+    - 3306:3306
+   container_name: mysql-docker
+   network_mode: host
+   environment:
+    MYSQL_ROOT_PASSWORD: root
+    MYSQL_DATABASE: qnadb
+    MYSQL_USER: app_root
+    MYSQL_PASSWORD: root123
+
+  qna-api:
+   image: dhiman1987/qna:api-image
+   restart: always
+   network_mode: host
+   container_name: qna-api-docker
+   environment:
+    MYSQL_CI_URL: jdbc:mysql://localhost:3306/qnadb
+    MYSQL_USER: app_root
+    MYSQL_PASSWORD: root123
+   depends_on:
+    - mysql
+   ports: 
+    - 8080:8080
+
+  qna-frontend:
+   image: dhiman1987/qna:frontend-image
+   network_mode: host
+   container_name: qna-frontend-docker
+   ports: 
+    - 4200:4200

@@ -1,0 +1,16 @@
+{
+    "name": "package",
+    "version": "1.0.0",
+    "description": "This file adds the express dependencie for server.js file to run a simple express server which in turn will host the angular application",
+    "main": "karma.conf.js",
+    "dependencies": {
+        "express": "^4.16.3"
+    },
+    "devDependencies":{},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js"
+    },
+    "author": "Dhiman Talapatra",
+    "license": "ISC"
+}

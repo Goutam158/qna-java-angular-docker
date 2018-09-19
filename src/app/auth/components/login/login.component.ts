@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private clear(){
+  clear(){
     this.email=undefined;
     this.password=undefined;
     this.errorMessage=undefined;
