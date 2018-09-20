@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.stackroute.qna.TO.CommentTO;
@@ -21,6 +22,10 @@ import com.stackroute.qna.util.QnaUtil;
 @Service
 public class CommentService {
 
+
+	@Autowired
+	private Environment env; 
+	
 	@Autowired
 	private CommentRepository commentRepository;
 	
@@ -33,18 +38,18 @@ public class CommentService {
 	public boolean addComment(CommentTO to, String email) throws CommentNotFoundException, QuestionNotFoundException, UserNotFoundException {
 		
 		if(to==null) {
-			throw new CommentNotFoundException("Comment is not proper");
+			throw new CommentNotFoundException(env.getProperty("qna.comment.not.proper"));
 		}
 		if(null == to.getQuestion()) {
-			throw new QuestionNotFoundException("Reference Question not found");
+			throw new QuestionNotFoundException(env.getProperty("qna.reference.question.not.found"));
 		}
 		QuestionEntity question = questionRepository.findOne(to.getQuestion().getId());
 		if(null == question) {
-			throw new QuestionNotFoundException("Reference Question not found");
+			throw new QuestionNotFoundException(env.getProperty("qna.reference.question.not.found"));
 		}
 		Optional<UserEntity> user = userRepository.findByEmail(email);
 		if(!user.isPresent()) {
-			throw new UserNotFoundException("Logged in user could not be determined");
+			throw new UserNotFoundException(env.getProperty("qna.user.connot.be.determined"));
 		}
 		CommentEntity comment = QnaUtil.getEntityFromTO(to);
 		comment.setQuestion(question);
@@ -60,7 +65,7 @@ public class CommentService {
 	public boolean deleteComment(int id) throws CommentNotFoundException {
 		CommentEntity entity = commentRepository.findOne(id);
 		if(null == entity) {
-			throw new CommentNotFoundException("Comment not found for id "+id);
+			throw new CommentNotFoundException(env.getProperty("qna.comment.not.found.with.id")+" "+id);
 		}
 		commentRepository.delete(entity);
 		return true;

@@ -17,6 +17,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.stackroute.qna.TO.CommentTO;
@@ -35,6 +37,9 @@ import com.stackroute.qna.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
 public class QuestionServiceTest {
+	
+	@Mock
+	private Environment env; 
 	
 	@Mock
 	private QuestionRepository questionRepository;
@@ -119,6 +124,10 @@ public class QuestionServiceTest {
 	@Test
 	public void whenGetQuestionDetailsQuestionNotFoundException(){
 		when(questionRepository.findOne(1)).thenReturn(null);
+		
+		when(env.getProperty("qna.question.not.found.with.id"))
+		.thenReturn("Question not found for id");
+		
 		try {
 			QuestionTO question = this.questionService.getQuestionDetails(1);
 		} catch (Exception e) {
@@ -176,6 +185,8 @@ public class QuestionServiceTest {
 	
 	@Test
 	public void whenAddQuestionQuestionNotFoundException() {
+		when(env.getProperty("qna.question.not.proper"))
+		.thenReturn("Question is not proper");
 		try {
 			this.questionService.addQuestion(null, "test.user@exmaple.com");
 		} catch (Exception e) {
@@ -198,6 +209,10 @@ public class QuestionServiceTest {
 		
 		when(userRepository.findByEmail("test.user@exmaple.com"))
 		.thenReturn(Optional.ofNullable(null));
+
+		when(env.getProperty("qna.user.connot.be.determined"))
+		.thenReturn("Logged in user could not be determined");
+		
 		try {
 			this.questionService.addQuestion(to, "test.user@exmaple.com");
 		} catch (Exception e) {
@@ -212,6 +227,10 @@ public class QuestionServiceTest {
 		to.setDescription("Question 1 description");
 		to.setCreatedOn(new Date());
 		to.setTopic(null);
+		
+		when(env.getProperty("qna.reference.topic.not.found"))
+		.thenReturn("Reference Topic not found");
+		
 		try {
 			this.questionService.addQuestion(to, "test.user@exmaple.com");
 		} catch (Exception e) {

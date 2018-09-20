@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -37,6 +38,9 @@ import com.stackroute.qna.repository.UserRepository;
 @RunWith(SpringRunner.class)
 public class TopicServiceTest {
 
+	@Mock
+	private Environment env; 
+	
 	@Mock
 	private TopicRepository topicRepository;
 
@@ -139,6 +143,10 @@ public class TopicServiceTest {
 	@Test
 	public void whenGetTopicDetailsTopicNotFoundException(){
 		when(topicRepository.findOne(1)).thenReturn(null);
+		
+		when(env.getProperty("qna.topic.not.found.with.id"))
+		.thenReturn("Topic not found for id");
+		
 		try {
 			TopicTO topic = this.topicService.getTopicDetails(1);
 		} catch (Exception e) {
@@ -185,6 +193,8 @@ public class TopicServiceTest {
 	
 	@Test
 	public void whenAddTopicTopicNotFoundException() {
+		when(env.getProperty("qna.topic.not.proper"))
+		.thenReturn("Topic is not proper");
 		try {
 			this.topicService.addTopic(null, "test.user@exmaple.com");
 		} catch (Exception e) {
@@ -199,8 +209,13 @@ public class TopicServiceTest {
 		to.setName("Topic 1");
 		to.setDescription("Topic 1 description");
 		to.setCreatedOn(new Date());
+		
 		when(userRepository.findByEmail("test.user@exmaple.com"))
 		.thenReturn(Optional.ofNullable(null));
+		
+		when(env.getProperty("qna.user.connot.be.determined"))
+		.thenReturn("Logged in user could not be determined");
+		
 		try {
 			this.topicService.addTopic(to, "test.user@exmaple.com");
 		} catch (Exception e) {

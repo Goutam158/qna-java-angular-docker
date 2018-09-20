@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.stackroute.qna.TO.CommentTO;
@@ -43,6 +44,9 @@ public class CommentServiceTest {
 	
 	@Mock
 	private CommentRepository commentRepository;
+	
+	@Mock
+	private Environment env;
 	
 	@InjectMocks
 	private CommentService commentService;
@@ -122,6 +126,8 @@ public class CommentServiceTest {
 	
 	@Test
 	public void whenAddCommentCommentNotFoundException() {
+		when(env.getProperty("qna.comment.not.proper"))
+		.thenReturn("Comment is not proper");
 		try {
 			this.commentService.addComment(null, "test.user@exmaple.com");
 		} catch (Exception e) {
@@ -138,6 +144,9 @@ public class CommentServiceTest {
 		QuestionTO question = new QuestionTO();
 		question.setId(1);
 		to.setQuestion(question);
+		
+		when(env.getProperty("qna.user.connot.be.determined"))
+		.thenReturn("Logged in user could not be determined");
 		
 		when(questionRepository.findOne(to.getQuestion().getId()))
 		 .thenReturn(this.comment.getQuestion());
@@ -158,6 +167,10 @@ public class CommentServiceTest {
 		to.setDescription("Comment 1 description");
 		to.setCreatedOn(new Date());
 		to.setQuestion(null);
+		
+		when(env.getProperty("qna.reference.question.not.found"))
+		.thenReturn("Reference Question not found");
+		
 		try {
 			this.commentService.addComment(to, "test.user@exmaple.com");
 		} catch (Exception e) {

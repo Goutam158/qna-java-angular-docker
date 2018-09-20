@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.stackroute.qna.TO.UserTO;
@@ -26,6 +27,9 @@ import io.jsonwebtoken.Jwts;
 
 @RunWith(SpringRunner.class)
 public class UserServiceTest {
+	
+	@Mock
+	private Environment env; 
 
 	@Mock
 	private UserRepository userRepository;
@@ -117,6 +121,8 @@ public class UserServiceTest {
 
 	@Test
 	public void whenAdduserUserNotFoundException(){
+		when(env.getProperty("qna.user.cannot.be.null"))
+		.thenReturn("User cannot be null");
 		try {
 			userService.addUser(null);
 		}catch(Exception e) {
@@ -129,6 +135,9 @@ public class UserServiceTest {
 	public void whenAdduserUserAlreadyExistsException(){
 		when(userRepository.findByEmail("test.user@exmaple.com"))
 		.thenReturn(Optional.ofNullable(this.user));
+		
+		when(env.getProperty("qna.email.already.exists"))
+		.thenReturn("Alerady Exists");
 
 		UserTO user =  new UserTO();
 		user.setFirstName("Test");
@@ -140,7 +149,7 @@ public class UserServiceTest {
 			userService.addUser(user);
 		}catch(Exception e) {
 			assertThat(e).isInstanceOf(UserAlreadyExistsException.class);
-			assertThat(e.getMessage()).isEqualTo("User with email "+user.getEmail()+" Alerady Exists");
+			assertThat(e.getMessage()).isEqualTo(user.getEmail()+" Alerady Exists");
 		}
 	}
 	
@@ -190,6 +199,9 @@ public class UserServiceTest {
 	
 	@Test
 	public void whenUpdateUserUserNotFoundExceptionBlankUser(){
+		when(env.getProperty("qna.user.cannot.be.null"))
+		.thenReturn("User cannot be null");
+		
 		try {
 			userService.updateUser(null);
 		}catch(Exception e) {
@@ -202,6 +214,9 @@ public class UserServiceTest {
 	public void whenUpdateUserUserNotFoundException(){
 		when(userRepository.findByEmail("test.user@exmaple.com"))
 		.thenReturn(Optional.ofNullable(null));
+		
+		when(env.getProperty("qna.user.cannot.be.null"))
+		.thenReturn("User cannot be null");
 
 		UserTO user =  new UserTO();
 		user.setFirstName("Test");
@@ -231,6 +246,9 @@ public class UserServiceTest {
 	
 	@Test
 	public void whenDeleteUserUserNotFoundExceptionBlankUser(){
+		when(env.getProperty("qna.user.cannot.be.null"))
+		.thenReturn("User cannot be null");
+		
 		try {
 			userService.deleteUser(null);
 		}catch(Exception e) {
@@ -244,11 +262,14 @@ public class UserServiceTest {
 	public void whenDeleteUserUserNotFoundException(){
 		when(userRepository.findByEmail("test.user@exmaple.com"))
 		.thenReturn(Optional.ofNullable(null));
+		
+		when(env.getProperty("qna.user.not.found.with.email"))
+				.thenReturn("User with not found with email");
 		try {
 			userService.deleteUser("test.user@exmaple.com");
 		}catch(Exception e) {
 			assertThat(e).isInstanceOf(UserNotFoundException.class);
-			assertThat(e.getMessage()).isEqualTo("User with email "+user.getEmail()+" Not found");
+			assertThat(e.getMessage()).isEqualTo("User with not found with email "+user.getEmail());
 		}
 	}
 	

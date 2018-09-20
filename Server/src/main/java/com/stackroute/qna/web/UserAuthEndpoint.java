@@ -3,6 +3,7 @@ package com.stackroute.qna.web;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +25,9 @@ public class UserAuthEndpoint {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private Environment env;
 
 	@PostMapping(value="/login", produces="text/html")
 	public ResponseEntity<String> login(@RequestParam("email") String email, @RequestParam("password") String password) {
@@ -38,7 +42,7 @@ public class UserAuthEndpoint {
 	public ResponseEntity<String> signup(@Valid @RequestBody UserTO newUser) {
 		boolean status = false;
 		if(null == newUser) {
-			return new ResponseEntity<String>("User cannot be null", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>(env.getProperty("qna.user.cannot.be.null"), HttpStatus.BAD_REQUEST);
 		}
 		try {
 			status = userService.addUser(newUser);
@@ -46,9 +50,9 @@ public class UserAuthEndpoint {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		if(status) {
-			return new ResponseEntity<String>("User signed up successfully with Email "+newUser.getEmail(), HttpStatus.CREATED);
+			return new ResponseEntity<String>(env.getProperty("qna.signup.successful")+" "+newUser.getEmail(), HttpStatus.CREATED);
 		}else {
-			return new ResponseEntity<String>("User signed up failed with Email "+newUser.getEmail(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>(env.getProperty("qna.signup.failed")+" "+newUser.getEmail(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

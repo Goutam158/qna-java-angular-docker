@@ -11,6 +11,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ import com.stackroute.qna.util.QnaUtil;
 public class TopicService {
 
 	@Autowired
+	private Environment env;
+	
+	@Autowired
 	private TopicRepository topicRepository;
 	
 	@Autowired
@@ -43,7 +47,7 @@ public class TopicService {
 	public boolean deleteTopic(int id) throws TopicNotFoundException {
 		TopicEntity topic = topicRepository.findOne(id);
 		if(null == topic) {
-			throw new TopicNotFoundException("Topic not found for id "+id);
+			throw new TopicNotFoundException(env.getProperty("qna.topic.not.found.with.id")+" "+id);
 		}
 		topicRepository.delete(topic);
 		return true;
@@ -51,11 +55,11 @@ public class TopicService {
 	
 	public boolean addTopic(TopicTO to, String email) throws TopicNotFoundException, UserNotFoundException {
 		if(to==null) {
-			throw new TopicNotFoundException("Topic is not proper");
+			throw new TopicNotFoundException(env.getProperty("qna.topic.not.proper"));
 		}
 		Optional<UserEntity> user = userRepository.findByEmail(email);
 		if(!user.isPresent()) {
-			throw new UserNotFoundException("Logged in user could not be determined");
+			throw new UserNotFoundException(env.getProperty("qna.user.connot.be.determined"));
 		}
 		TopicEntity topic = QnaUtil.getEntityFromTO(to);
 		topic.setCreatedBy(user.get());
@@ -70,7 +74,7 @@ public class TopicService {
 	public TopicTO getTopicDetails(int id) throws TopicNotFoundException {
 		TopicEntity entity = topicRepository.findOne(id);
 		if(null == entity) {
-			throw new TopicNotFoundException("Topic not found for id "+id);
+			throw new TopicNotFoundException(env.getProperty("qna.topic.not.found.with.id")+" "+id);
 		}
 		TopicTO to = QnaUtil.getTOfromEntity(entity);
 		TreeSet<QuestionTO> questions = new TreeSet<>(

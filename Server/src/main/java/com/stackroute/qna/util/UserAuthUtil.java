@@ -1,6 +1,7 @@
 package com.stackroute.qna.util;
 
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import com.stackroute.qna.TO.UserTO;
 import com.stackroute.qna.entity.UserEntity;
@@ -9,6 +10,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 public class UserAuthUtil {
+	
+	static ResourceBundle applicationProperties = ResourceBundle.getBundle("application");
 
 	public static UserTO getTOfromEntity(UserEntity userEntity) {
 		if(null==userEntity) {
@@ -43,7 +46,7 @@ public class UserAuthUtil {
 		return Jwts.builder()
 				.setSubject(email)
 				.setIssuedAt(new Date())
-				.signWith(SignatureAlgorithm.HS256, "my$ecr3tk3y")
+				.signWith(SignatureAlgorithm.HS256, applicationProperties.getString("qna.jwt.secrect.key"))
 				.compact();
 	}
 }

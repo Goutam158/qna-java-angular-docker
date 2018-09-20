@@ -9,6 +9,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.stackroute.qna.TO.CommentTO;
@@ -28,6 +29,9 @@ import com.stackroute.qna.util.QnaUtil;
 public class QuestionService {
 
 	@Autowired
+	private Environment env;
+	
+	@Autowired
 	private QuestionRepository questionRepository;
 	
 	@Autowired
@@ -39,7 +43,7 @@ public class QuestionService {
 	public boolean deleteQuestion(int id) throws QuestionNotFoundException {
 		QuestionEntity entity = questionRepository.findOne(id);
 		if(null == entity) {
-			throw new QuestionNotFoundException("Question not found for id "+id);
+			throw new QuestionNotFoundException(env.getProperty("qna.question.not.found.with.id")+" "+id);
 		}
 		questionRepository.delete(entity);
 		return true;
@@ -48,18 +52,18 @@ public class QuestionService {
 	public boolean addQuestion(QuestionTO to, String email) throws QuestionNotFoundException, TopicNotFoundException , UserNotFoundException{
 		
 		if(to == null) {
-			throw new QuestionNotFoundException("Question is not proper");
+			throw new QuestionNotFoundException(env.getProperty("qna.question.not.proper"));
 		}
 		if(null == to.getTopic()) {
-			throw new TopicNotFoundException("Reference Topic not found");
+			throw new TopicNotFoundException(env.getProperty("qna.reference.topic.not.found"));
 		}
 		TopicEntity topic  = topicRepository.findOne(to.getTopic().getId());
 		if(null == topic) {
-			throw new TopicNotFoundException("Reference Topic not found");
+			throw new TopicNotFoundException(env.getProperty("qna.reference.topic.not.found"));
 		}
 		Optional<UserEntity> user = userRepository.findByEmail(email);
 		if(!user.isPresent()) {
-			throw new UserNotFoundException("Logged in user could not be determined");
+			throw new UserNotFoundException(env.getProperty("qna.user.connot.be.determined"));
 		}
 		QuestionEntity question = QnaUtil.getEntityFromTO(to);
 		question.setTopic(topic);
@@ -75,7 +79,7 @@ public class QuestionService {
 	public QuestionTO getQuestionDetails(int id) throws QuestionNotFoundException {
 		QuestionEntity entity = questionRepository.findOne(id);
 		if(null == entity) {
-			throw new QuestionNotFoundException("Question not found for id "+id);
+			throw new QuestionNotFoundException(env.getProperty("qna.question.not.found.with.id")+" "+id);
 		}
 		QuestionTO to = QnaUtil.getTOfromEntity(entity);
 		TreeSet<CommentTO> comments = new TreeSet<>(

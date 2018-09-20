@@ -1,6 +1,7 @@
 package com.stackroute.qna.web;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,6 +17,8 @@ import org.springframework.web.filter.GenericFilterBean;
 import io.jsonwebtoken.Jwts;
 
 public class AuthFilter extends GenericFilterBean {
+	
+	ResourceBundle applicationProperties = ResourceBundle.getBundle("application");
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
@@ -29,18 +32,18 @@ public class AuthFilter extends GenericFilterBean {
 
 			final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 			if(null==authHeader || !authHeader.startsWith("Bearer ")) {
-				throw new ServletException("Missing Authorization header starting with 'Bearer '");
+				throw new ServletException(applicationProperties.getString("qna.auth.filter.missing.token"));
 			}
 
 			final String token = authHeader.substring(7);
 			final String email = Jwts
 					.parser()
-					.setSigningKey("my$ecr3tk3y")
+					.setSigningKey(applicationProperties.getString("qna.jwt.secrect.key"))
 					.parseClaimsJws(token)
 					.getBody()
 					.getSubject();
 			if(StringUtils.isEmpty(email)) {
-				throw new ServletException("No valid user found in the auth token");
+				throw new ServletException(applicationProperties.getString("qna.auth.filter.no.valid.user"));
 			}
 			request.setAttribute("email", email);
 			chain.doFilter(request, response);

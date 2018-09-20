@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,6 +28,9 @@ import com.stackroute.qna.service.UserService;
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserAuthEndpoint.class)
 public class UserAuthEndpointTest {
+	
+	@MockBean
+	private Environment env;
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -91,6 +95,9 @@ public class UserAuthEndpointTest {
 	public void whenSignup() throws UserAlreadyExistsException, UserNotFoundException {
 		when(userService.addUser((UserTO)any()))
 		.thenReturn(true);
+		
+		when(env.getProperty("qna.signup.successful"))
+		.thenReturn("User signed up successfully with Email");
 		
 		try {
 			mockMvc.perform(
