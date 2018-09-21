@@ -70,7 +70,7 @@ export class AppPage {
 
 
   clickDeleteQuestionButton(){
-    return element(by.id('.delete-question')).click();
+    return element.all(by.id('.delete-question')).first().click();
   }
 
   getTopicCards(){

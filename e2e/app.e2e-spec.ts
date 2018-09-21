@@ -87,17 +87,12 @@ describe("question-n-answers App", () => {
    });
 
 
- /* it("should be able to delete comment", () => {
-    console.log("============ COUNT +++++++ "+commentCount)
+ it("should be able to delete comment", () => {
     page.clickDeleteCommentButton();
-     if(page.getConfirmDialogYesButton().isDisplayed()){
-        page.clickConfirmDialogYesButton();
-        console.log('BUTTON CLICKED !!');
-        expect(page.getCommentCards().count()).toEqual(commentCount);
-      }else{
-        console.log('BUTTON INVISIBLE !!!!');
-      }
-   });*/
+    page.clickConfirmDialogYesButton();
+    browser.sleep(2000);
+    expect(page.getCommentCards().count()).toEqual(commentCount);
+   });
 
  it("should be able to navigate to previous topic-details page", () => {
    browser.get(topicDetailsUrl);
@@ -105,12 +100,12 @@ describe("question-n-answers App", () => {
    });
  
 
-  /*it("should be able to delete question", () => {
+  it("should be able to delete question", () => {
     page.clickDeleteQuestionButton();
-    browser.pause(1000);
     page.clickConfirmDialogYesButton();
+    browser.sleep(2000);
     expect(page.getQuestionCards().count()).toEqual(questionCount);
-   });*/
+   });
 
   it("should be able to logout", () => {
     page.clickLogoutButton();
