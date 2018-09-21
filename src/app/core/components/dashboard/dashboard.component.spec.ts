@@ -13,6 +13,7 @@ import { CoreService } from '../../core.service';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { ActivatedRoute } from '@angular/router';
+import { MockCoreService } from '../../mock.core.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -21,7 +22,10 @@ describe('DashboardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers :[
-        CoreService,
+        {
+          provide: CoreService,
+          useClass : MockCoreService
+        },
         AuthService,
         HttpClient,
         HttpHandler,
@@ -61,7 +65,7 @@ describe('DashboardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create  and all the topics', () => {
     expect(component).toBeTruthy();
   });
 });

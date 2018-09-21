@@ -13,6 +13,7 @@ import { CoreService } from '../../core.service';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { ActivatedRoute } from '@angular/router';
+import { MockCoreService } from '../../mock.core.service';
 
 describe('TopicComponent', () => {
   let component: TopicComponent;
@@ -21,7 +22,10 @@ describe('TopicComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers :[
-        CoreService,
+        {
+          provide: CoreService,
+          useClass : MockCoreService
+        },
         AuthService,
         HttpClient,
         HttpHandler,
@@ -59,7 +63,7 @@ describe('TopicComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create and fetch topic details', () => {
     expect(component).toBeTruthy();
   });
 });
