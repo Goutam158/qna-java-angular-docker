@@ -18,7 +18,7 @@
       <button id="#topic-button" mat-raised-button color="primary" (click)="addTopic()">Add Topic</button>
     </form>
   </mat-card>
-<mat-card id=".topic-card" *ngFor='let topic of topics | async' class="qna-card">
+<mat-card id=".topic-card" *ngFor='let topic of topics' class="qna-card">
   <h2 class="mat-h2" id=".topic-name">{{topic.name}}</h2>
 
   <div style="display:flex">

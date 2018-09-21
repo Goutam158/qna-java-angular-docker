@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 describe('ConfirmationDialogComponent', () => {
   let component: ConfirmationDialogComponent;
@@ -8,6 +9,16 @@ describe('ConfirmationDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers : [{
+       provide: MatDialogRef,
+       useClass: class{ mockDialogRef = jasmine.createSpy("mockDialogRef");}
+      },
+      {
+        provide:MAT_DIALOG_DATA,
+        userData : "Confirmation message",
+      }
+    ],
+      imports: [MatDialogModule],
       declarations: [ ConfirmationDialogComponent ]
     })
     .compileComponents();

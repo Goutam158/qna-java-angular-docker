@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from '../../core.service';
 import { TopicModel } from '../../topic.model';
-import { Observable } from 'rxjs/Observable';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
 
@@ -15,7 +14,7 @@ export class DashboardComponent implements OnInit {
   constructor(private _coreService : CoreService,
               private _snackBar : MatSnackBar,
               private _dialog:MatDialog) { }
-  topics : Observable<TopicModel[]>;
+  topics : TopicModel[] = [];
   topic: TopicModel = new TopicModel();
   errorMessage : string;
   
@@ -71,7 +70,14 @@ export class DashboardComponent implements OnInit {
   }
 
   private getTopics(){
-    this.topics = this._coreService.getTopics()  
+    this._coreService.getTopics().subscribe(
+      res=>{
+        this.topics = res;
+      },
+      errorRes=>{
+        this._snackBar.open(`Failed to fetch topics ${errorRes.error}`,null,{duration : 6000,});
+      }
+    );
   }
 
   private clear(){
