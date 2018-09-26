@@ -40,7 +40,7 @@ public class DataInitializer {
 			systemUser =  new UserEntity();
 			systemUser.setFirstName(env.getProperty("qna.system.user.first.name"));
 			systemUser.setLastName(env.getProperty("qna.system.user.last.name"));
-			systemUser.setEmail(env.getProperty("qna.system.user.email.name"));
+			systemUser.setEmail(env.getProperty("qna.system.user.email"));
 			systemUser.setPassword(env.getProperty("qna.system.password.first.name"));
 			
 			userRepository.save(systemUser);

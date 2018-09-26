@@ -82,7 +82,6 @@ export class SignupComponent {
       this.errorMessage = 'Password and Retype password is not matching';
       return false;
     }
-  
     return true;
   }
 
