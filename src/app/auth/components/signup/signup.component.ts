@@ -28,13 +28,11 @@ export class SignupComponent {
         .subscribe(
           res=>{
             this.clear();
-            console.log(res);
             this.message=res;
             this._router.navigateByUrl('/login');
             this._snackBar.open(`User signup successful`,null,{duration : 4000,});
           },
           errorResp=>{
-            console.error(errorResp.error);
             this.message=undefined;
             this.errorMessage = errorResp.error;
           }

@@ -20,7 +20,6 @@ private TOKEN = 'qna-auth-jwt-token';
     }
 
     signup(userModel:UserModel):Observable<any>{
-        console.log(userModel);
         return this._http
         .post(`${this.authEndpoint}/signup`,userModel,{responseType : 'text'});
     }
