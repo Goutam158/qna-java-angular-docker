@@ -1,27 +1,65 @@
-# QuestionNAnswers
+# QnA Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3.
+This is a project created for demo purpose.
 
-## Development server
+## What it does
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+There are Topics. Topics can have multiple questions and questions can have multiple comments. You can remove and add all Topic, Question and Comments
 
-## Code scaffolding
+## Technology Stack
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Angular --> Frontend GUI
+Angular Material --> Look and Feel
+Spring Boot --> Backend Java layer
+Spring Data --> Database communication of backend (JPA)
+Junit --> java Unit testing
+Karma amd Jasmin --> Angular unit testing
+Protactor --> angular end 2 end (e2e) testing
+Swagger UI --> REST documantation and Testing
+JWT --> Token generation for authentication
+MySql --> Database
+Docker --> Container
+Docker Compose --> Multiple Container management
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+# How to run
 
-## Running unit tests
+## with Docker-Compose
+
+If Docker and docker-compose is installed in you system then simple run
+`docker-compose up`
+This would download all the images and run 2 applications
+
+1. [Backend] http://localhost:8080
+2. [Frontend] http://localhost:4200
+
+note : 3360 for MySql, 8080 for Backend, 4200 Angular is required to be free.
+
+## without docker
+
+maven, nodejs, angular-cli, mysql database must be installed.
+
+1. create a schema `create schema qnadb`
+2. create a user `app_root` who should have all the access in the `qnadb` schema
+3. execute `env.sh` or `env.bat`, unix/windows respectively to set the environment variables
+4. run `ng serve`
+5. navigate to Server subdirectory `cd Server`
+6. run `mvn spring-boot:run`
+
+now check
+
+1. [Backend] http://localhost:8080
+2. [Frontend] http://localhost:4200
+
+note : 3360 for MySql, 8080 for Backend, 4200 Angular is required to be free.
+
+## Running java unit tests
+Run `mvn test` to execute the unit tests Junit
+
+## Running angular unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Running angular end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
