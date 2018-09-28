@@ -19,7 +19,7 @@ There are Topics. Topics can have multiple questions and questions can have mult
 9. JWT --> Token generation for authentication
 10. MySql --> Database
 11. Docker --> Container
-12 .Docker Compose --> Multiple Container management
+12. Docker Compose --> Multiple Container management
 
 
 # How to run
