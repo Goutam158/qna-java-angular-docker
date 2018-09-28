@@ -8,18 +8,18 @@ There are Topics. Topics can have multiple questions and questions can have mult
 
 ## Technology Stack
 
-Angular --> Frontend GUI
-Angular Material --> Look and Feel
-Spring Boot --> Backend Java layer
-Spring Data --> Database communication of backend (JPA)
-Junit --> java Unit testing
-Karma amd Jasmin --> Angular unit testing
-Protactor --> angular end 2 end (e2e) testing
-Swagger UI --> REST documantation and Testing
-JWT --> Token generation for authentication
-MySql --> Database
-Docker --> Container
-Docker Compose --> Multiple Container management
+1. Angular --> Frontend GUI
+2. Angular Material --> Look and Feel
+3. Spring Boot --> Backend Java layer
+4. Spring Data --> Database communication of backend (JPA)
+5. Junit --> java Unit testing
+6. Karma amd Jasmin --> Angular unit testing
+7. Protactor --> angular end 2 end (e2e) testing
+8. Swagger UI --> REST documantation and Testing
+9. JWT --> Token generation for authentication
+10. MySql --> Database
+11. Docker --> Container
+12 .Docker Compose --> Multiple Container management
 
 
 # How to run
